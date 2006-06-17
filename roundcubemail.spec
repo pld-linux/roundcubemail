@@ -1,24 +1,27 @@
 # TODO:
-# - prepare config for apache (don't install boundled .htaccess)
 # - prepare config for lighttp
 # - add logrotate file
 # - it has PEAR boundled inside - use system ones
+# - use pear-deps system?
 # - review patches:
 #   http://sourceforge.net/forum/forum.php?forum_id=543557
+# - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
 %define		_beta	beta
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.2
+Release:	0.%{_beta}.0.3
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
 # Source0-md5:	cdbcdfd419c01a4c437327c625d28da5
+Source1:	%{name}.config
 Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	php-pcre
+# Some php-database backend. Suggests?
 Requires:	webapps
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -59,6 +62,9 @@ install config/main.inc.php.dist $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
 ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
 ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+
 %triggerin -- apache1
 %webapp_register apache %{_webapp}
 
@@ -78,8 +84,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGELOG INSTALL README UPGRADING SQL
 %dir %attr(750,root,http) %{_sysconfdir}
-#%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
-#%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
 %dir %{_appdir}/config
