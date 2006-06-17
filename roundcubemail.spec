@@ -9,7 +9,7 @@
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.1
+Release:	0.%{_beta}.0.2
 License:	GPL v2
 Group:		Applications/WWW
 # Original source:
@@ -28,7 +28,7 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_webapps	/etc/webapps
-%define		_webapp		%{name}
+%define		_webapp		roundcube
 %define		_sysconfdir	%{_webapps}/%{_webapp}
 %define		_appdir		%{_datadir}/%{_webapp}
 %define		_appdatadir	/var/lib/roundcube
@@ -45,6 +45,8 @@ skinnable using XHTML and CSS 2.
 %prep
 %setup -q -n %{name}-%{version}%{_beta}
 %patch0 -p1
+
+find -name .svn | xargs -r rm -rf
 
 %install
 rm -rf $RPM_BUILD_ROOT
