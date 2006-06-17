@@ -1,0 +1,22 @@
+--- ./config/main.inc.php.dist.org	2006-06-17 17:42:13.000000000 +0000
++++ ./config/main.inc.php.dist	2006-06-17 17:43:35.000000000 +0000
+@@ -83,10 +83,10 @@
+ $rcmail_config['skin_path'] = 'skins/default/';
+ 
+ // use this folder to store temp files (must be writebale for apache user)
+-$rcmail_config['temp_dir'] = 'temp/';
++$rcmail_config['temp_dir'] = '/var/lib/roundcube';
+ 
+ // use this folder to store log files (must be writebale for apache user)
+-$rcmail_config['log_dir'] = 'logs/';
++$rcmail_config['log_dir'] = '/var/log/roundcube';
+ 
+ // session lifetime in minutes
+ $rcmail_config['session_lifetime'] = 10;
+@@ -172,4 +172,4 @@
+ $rcmail_config['prettydate'] = TRUE;
+ 
+ // end of config file
+-?>
+\ No newline at end of file
++?>
