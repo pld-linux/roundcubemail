@@ -11,7 +11,7 @@
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.3
+Release:	0.%{_beta}.0.4
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
@@ -52,6 +52,7 @@ install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
 
 # Main application part:
 cp -R program/* $RPM_BUILD_ROOT%{_appdir}/program
+install index.php $RPM_BUILD_ROOT%{_appdir}
 
 # Skins installation (maybe it should be as config??)
 cp -R skins/* $RPM_BUILD_ROOT%{_appdir}/skins
@@ -88,6 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
+%{_appdir}/*.php
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
 %dir %{_appdir}/program
