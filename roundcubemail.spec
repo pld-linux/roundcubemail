@@ -10,10 +10,10 @@
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.1
+Release:	0.%{_beta}.0.2
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_%{_beta}}.tar.gz
+Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
 # Source0-md5:	cdbcdfd419c01a4c437327c625d28da5
 Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
@@ -28,6 +28,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	%{_webapps}/%{_webapp}
 %define		_appdir		%{_datadir}/%{_webapp}
 %define		_appdatadir	/var/lib/roundcube
+%define		_applogdir	/var/log/roundcube
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client with an
@@ -38,12 +39,12 @@ in PHP and requires the MySQL database. The user interface is fully
 skinnable using XHTML and CSS 2.
 
 %prep
-%setup -q -n %{name}-%{version}%{_%{_beta}}
+%setup -q -n %{name}-%{version}%{_beta}
 %patch0 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_sysconfdir},/var/log/roundcube} \
+install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
 	$RPM_BUILD_ROOT%{_appdir}/{config,program,skins}
 
 # Main application part:
@@ -87,6 +88,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_appdir}/program/*
 %dir %{_appdir}/skins
 %{_appdir}/skins/default
-%dir %attr(770,root,http) /var/log/roundcube
-# %ghost logfile
+%dir %attr(770,root,http) %{_applogdir}
 %dir %attr(770,root,http) %{_appdatadir}
+# %ghost logfile
