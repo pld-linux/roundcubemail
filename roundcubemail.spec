@@ -9,7 +9,7 @@
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.2
+Release:	0.%{_beta}.0.3
 License:	GPL v2
 Group:		Applications/WWW
 # Original source:
@@ -23,6 +23,7 @@ URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	php-pcre
 # Some php-database backend. Suggests?
+# php-sockets is required to make spellcheck working
 Requires:	webapps
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
