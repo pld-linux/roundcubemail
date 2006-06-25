@@ -9,7 +9,7 @@
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.1
+Release:	0.%{_beta}.1
 License:	GPL v2
 Group:		Applications/WWW
 # Original source:
