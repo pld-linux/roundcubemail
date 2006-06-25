@@ -13,10 +13,3 @@
  
  // session lifetime in minutes
  $rcmail_config['session_lifetime'] = 10;
-@@ -172,4 +172,4 @@
- $rcmail_config['prettydate'] = TRUE;
- 
- // end of config file
--?>
-\ No newline at end of file
-+?>
