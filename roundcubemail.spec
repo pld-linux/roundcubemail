@@ -5,18 +5,18 @@
 # - use pear-deps system?
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
-%define		_beta	svn260
+%define		_beta	svn265
 Summary:	RoundCube Webmail
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_beta}.0.3
+Release:	0.%{_beta}.0.1
 License:	GPL v2
 Group:		Applications/WWW
 # Original source:
 #Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
 # Temporary place for svn-snapshot:
 Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}%{_beta}.tar.bz2
-# Source0-md5:	653777014b833e2bd08c875468fad7f2
+# Source0-md5:	a9bd90ec36fb07feedbd20fd52706ada
 Source1:	%{name}.config
 Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
