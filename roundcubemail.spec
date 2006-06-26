@@ -7,6 +7,7 @@
 #
 %define		_beta	svn265
 Summary:	RoundCube Webmail
+Summary(pl):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
 Release:	0.%{_beta}.1
@@ -43,6 +44,15 @@ folder manipulation and message filters. RoundCube Webmail is written
 in PHP and requires the MySQL database. The user interface is fully
 skinnable using XHTML and CSS 2.
 
+%description -l pl
+RoundCube Webmail to oparty na przegl±darce wielojêzyczny klient PHP z
+interfejsem u¿ytkownika podobnym do aplikacji. Udostêpnia pe³n±
+funkcjonalno¶æ jakiej mo¿na oczekiwaæ od klienta pocztowego, w tym
+obs³ugê MIME, ksi±¿kê adresow±, operacje na folderach i filtry
+wiadomo¶ci. RoundCube Webmail jest napisany w PHP i wymaga bazy danych
+MySQL. Interfejs u¿ytkownika mo¿na w pe³ni obudowaæ skórk± przy u¿yciu
+XHTML-a i CSS 2.
+
 %prep
 %setup -q -n %{name}-%{version}%{_beta}
 %patch0 -p1
@@ -70,6 +80,9 @@ ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
+%clean
+rm -rf $RPM_BUILD_ROOT
+
 %triggerin -- apache1
 %webapp_register apache %{_webapp}
 
@@ -81,9 +94,6 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
 %triggerun -- apache < 2.2.0, apache-base
 %webapp_unregister httpd %{_webapp}
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
