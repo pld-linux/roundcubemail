@@ -5,19 +5,24 @@
 # - use pear-deps system?
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
-%define		_beta	beta2
+#define		_svn	svn265
+%define		_snap	20060914
+#define		_beta	beta2
+%define		_rel	0.1
 Summary:	RoundCube Webmail
 Summary(pl):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
-Release:	1.%{_beta}.1
+Release:	1.%{?_svn}%{?_snap}.%{_rel}
 License:	GPL v2
 Group:		Applications/WWW
 # Original source:
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
 # Source0-md5:	889e80e5fe620051373fc76e6a5d1c71
 # Temporary place for svn-snapshot:
-#Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}%{_beta}.tar.bz2
+#Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}%{_svn}.tar.bz2
+Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
+# Source0-md5:	c975d2aac5ba318332ce8aa1fb7eb799
 Source1:	%{name}.config
 Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
@@ -54,7 +59,7 @@ MySQL. Interfejs u¿ytkownika mo¿na w pe³ni obudowaæ skórk± przy u¿yciu
 XHTML-a i CSS 2.
 
 %prep
-%setup -q -n %{name}-%{version}%{_beta}
+%setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{_svn}}
 %patch0 -p1
 
 find -name .svn | xargs -r rm -rf
