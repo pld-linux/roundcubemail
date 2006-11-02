@@ -16,10 +16,7 @@ Version:	0.1
 Release:	1.%{?_svn}%{?_snap}.%{_rel}
 License:	GPL v2
 Group:		Applications/WWW
-# Original source:
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
-# Source0-md5:	889e80e5fe620051373fc76e6a5d1c71
-# Temporary place for svn-snapshot:
+#Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
 #Source0:	http://www.blues.gda.pl/SOURCES/%{name}-%{version}%{_svn}.tar.bz2
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
 # Source0-md5:	c975d2aac5ba318332ce8aa1fb7eb799
