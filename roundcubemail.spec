@@ -8,7 +8,7 @@
 #define		_svn	svn265
 %define		_snap	20060914
 #define		_beta	beta2
-%define		_rel	0.1
+%define		_rel	0.3
 Summary:	RoundCube Webmail
 Summary(pl):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -24,7 +24,7 @@ Source1:	%{name}.config
 Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	php-pcre
+Requires:	php(pcre)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
 Requires:	webapps
