@@ -13,7 +13,7 @@ Summary:	RoundCube Webmail
 Summary(pl):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
-Release:	3.%{?_svn}%{?_snap}.%{_rel}
+Release:	3.%{?_svn}%{?_snap}%{?_beta}.%{_rel}
 License:	GPL v2
 Group:		Applications/WWW
 #Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
@@ -56,7 +56,7 @@ MySQL. Interfejs u¿ytkownika mo¿na w pe³ni obudowaæ skórk± przy u¿yciu
 XHTML-a i CSS 2.
 
 %prep
-%setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{_svn}}
+%setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{?_svn}%{?_beta}}
 %patch0 -p1
 
 find -name .svn | xargs -r rm -rf
