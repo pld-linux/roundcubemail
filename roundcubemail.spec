@@ -10,7 +10,7 @@
 #define		_beta	beta2
 %define		_rel	1
 Summary:	RoundCube Webmail
-Summary(pl):	RoundCube Webmail - poczta przez WWW
+Summary(pl.UTF-8):   RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
 Release:	4.%{?_svn}%{?_snap}%{?_beta}.%{_rel}
@@ -46,13 +46,13 @@ folder manipulation and message filters. RoundCube Webmail is written
 in PHP and requires the MySQL database. The user interface is fully
 skinnable using XHTML and CSS 2.
 
-%description -l pl
-RoundCube Webmail to oparty na przegl±darce wielojêzyczny klient PHP z
-interfejsem u¿ytkownika podobnym do aplikacji. Udostêpnia pe³n±
-funkcjonalno¶æ jakiej mo¿na oczekiwaæ od klienta pocztowego, w tym
-obs³ugê MIME, ksi±¿kê adresow±, operacje na folderach i filtry
-wiadomo¶ci. RoundCube Webmail jest napisany w PHP i wymaga bazy danych
-MySQL. Interfejs u¿ytkownika mo¿na w pe³ni obudowaæ skórk± przy u¿yciu
+%description -l pl.UTF-8
+RoundCube Webmail to oparty na przeglÄ…darce wielojÄ™zyczny klient PHP z
+interfejsem uÅ¼ytkownika podobnym do aplikacji. UdostÄ™pnia peÅ‚nÄ…
+funkcjonalnoÅ›Ä‡ jakiej moÅ¼na oczekiwaÄ‡ od klienta pocztowego, w tym
+obsÅ‚ugÄ™ MIME, ksiÄ…Å¼kÄ™ adresowÄ…, operacje na folderach i filtry
+wiadomoÅ›ci. RoundCube Webmail jest napisany w PHP i wymaga bazy danych
+MySQL. Interfejs uÅ¼ytkownika moÅ¼na w peÅ‚ni obudowaÄ‡ skÃ³rkÄ… przy uÅ¼yciu
 XHTML-a i CSS 2.
 
 %prep
