@@ -3,12 +3,13 @@
 # - add logrotate file
 # - it has PEAR boundled inside - use system ones
 # - use pear-deps system?
+# - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
 #define		_svn	svn445
-%define		_snap	20070108
+%define		_snap	20070318
 #define		_beta	beta2
-%define		_rel	1
+%define		_rel	0.4
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -19,11 +20,12 @@ Group:		Applications/WWW
 #Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
 #Source0:	%{name}-%{version}%{_svn}.tar.bz2
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
-# Source0-md5:	8e96ba85239c8cf3344c8f230ba30532
+# Source0-md5:	3e4dc0f840e51a76524f55914ed644e5
 Source1:	%{name}.config
 Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 Requires:	php(pcre)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
@@ -61,6 +63,9 @@ XHTML-a i CSS 2.
 
 find -name .svn | xargs -r rm -rf
 
+# undos the source
+find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' ')' -print0 | xargs -0 sed -i -e 's,\r$,,'
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
@@ -84,6 +89,22 @@ install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%pretrans
+if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
+	# import configs from previously manually installed site
+	d=/home/services/httpd/html/config
+	echo >&2 "Importing site configs from $d"
+	mkdir -p %{_sysconfdir}
+	if [ -f $d/db.inc.php ]; then
+		[ -f %{_sysconfdir}/db.inc.php ] && mv -f %{_sysconfdir}/db.inc.php{,.rpmorig}
+		cp -f $d/db.inc.php %{_sysconfdir}/db.inc.php
+	fi
+	if [ -f $d/main.inc.php ]; then
+		[ -f %{_sysconfdir}/main.inc.php ] && mv -f %{_sysconfdir}/main.inc.php{,.rpmorig}
+		cp -f $d/main.inc.php %{_sysconfdir}/main.inc.php
+	fi
+fi
 
 %triggerin -- apache1 < 1.3.37-3, apache1-base
 %webapp_register apache %{_webapp}
