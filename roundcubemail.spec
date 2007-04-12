@@ -9,7 +9,7 @@
 #define		_svn	svn445
 %define		_snap	20070318
 #define		_beta	beta2
-%define		_rel	0.9
+%define		_rel	0.11
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -26,6 +26,7 @@ Patch0:		%{name}-config.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
+Requires:	%{name}-skin
 Requires:	php(pcre)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
@@ -57,6 +58,14 @@ wiadomości. RoundCube Webmail jest napisany w PHP i wymaga bazy danych
 MySQL. Interfejs użytkownika można w pełni obudować skórką przy użyciu
 XHTML-a i CSS 2.
 
+%package skin-default
+Summary:	Default skin for RoundCube Webmail
+Group:		Applications/WWW
+Provides:	%{name}-skin
+
+%description skin-default
+Default skin for RoundCube Webmail.
+
 %prep
 %setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{?_svn}%{?_beta}}
 %patch0 -p1
@@ -75,7 +84,7 @@ install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
 cp -a index.php $RPM_BUILD_ROOT%{_appdir}
 
-# Skins installation (maybe it should be as config??)
+# Skins installation
 cp -a skins/* $RPM_BUILD_ROOT%{_appdir}/skins
 
 ## Configuration:
@@ -191,7 +200,10 @@ fi
 %lang(zh_CN) %{_appdir}/program/localization/zh_CN
 
 %dir %{_appdir}/skins
-%{_appdir}/skins/default
 %dir %attr(770,root,http) %{_applogdir}
 %dir %attr(770,root,http) %{_appdatadir}
 # %ghost logfile
+
+%files skin-default
+%defattr(644,root,root,755)
+%{_appdir}/skins/default
