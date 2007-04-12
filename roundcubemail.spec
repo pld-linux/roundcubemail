@@ -60,11 +60,15 @@ XHTML-a i CSS 2.
 
 %package skin-default
 Summary:	Default skin for RoundCube Webmail
+Summary(pl.UTF-8):	Domyślna skórka dla RoundCube Webmaila
 Group:		Applications/WWW
 Provides:	%{name}-skin
 
 %description skin-default
 Default skin for RoundCube Webmail.
+
+%description skin-default -l pl.UTF-8
+Domyślna skórka dla RoundCube Webmaila.
 
 %prep
 %setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{?_svn}%{?_beta}}
