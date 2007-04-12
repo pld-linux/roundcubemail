@@ -9,7 +9,7 @@
 #define		_svn	svn445
 %define		_snap	20070318
 #define		_beta	beta2
-%define		_rel	0.11
+%define		_rel	0.13
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -23,6 +23,7 @@ Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
 # Source0-md5:	3e4dc0f840e51a76524f55914ed644e5
 Source1:	%{name}.config
 Patch0:		%{name}-config.patch
+Patch1:		%{name}-faq-page.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -73,11 +74,12 @@ Domyślna skórka dla RoundCube Webmaila.
 %prep
 %setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{?_svn}%{?_beta}}
 %patch0 -p1
+%patch1 -p1
 
 find -name .svn | xargs -r rm -rf
 
 # undos the source
-find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' ')' -print0 | xargs -0 sed -i -e 's,\r$,,'
+find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -print0 | xargs -0 sed -i -e 's,\r$,,'
 
 %install
 rm -rf $RPM_BUILD_ROOT

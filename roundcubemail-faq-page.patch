@@ -1,0 +1,24 @@
+--- roundcubemail-nightly-20070318/index.php	2007-04-12 18:02:59.274319751 +0300
++++ roundcubemail-nightly-20070318/index.php	2007-04-12 19:29:32.262254092 +0300
+@@ -47,7 +47,7 @@
+ $OUTPUT_TYPE = 'html';
+ $JS_OBJECT_NAME = 'rcmail';
+ $INSTALL_PATH = dirname(__FILE__);
+-$MAIN_TASKS = array('mail','settings','addressbook','logout');
++$MAIN_TASKS = array('mail','settings','addressbook','logout', 'faq');
+ 
+ if (empty($INSTALL_PATH))
+   $INSTALL_PATH = './';
+@@ -187,6 +187,12 @@
+     }
+   }
+ 
++// display faq template
++if ($_task=='faq')
++  {
++    parse_template($_task);
++  }
++
+ // end session
+ else if ($_action=='logout' && isset($_SESSION['user_id']))
+   {
