@@ -163,9 +163,9 @@ fi
 %lang(cz) %{_appdir}/program/localization/cz
 %lang(da) %{_appdir}/program/localization/da
 %lang(de_CH) %{_appdir}/program/localization/de_CH
-%lang(de_DE) %{_appdir}/program/localization/de_DE
+%lang(de) %{_appdir}/program/localization/de_DE
 %lang(el) %{_appdir}/program/localization/el
-%lang(en_GN) %{_appdir}/program/localization/en_GB
+%lang(en_GB) %{_appdir}/program/localization/en_GB
 %lang(en_US) %{_appdir}/program/localization/en_US
 %lang(es) %{_appdir}/program/localization/es
 %lang(et) %{_appdir}/program/localization/et_EE
@@ -181,11 +181,11 @@ fi
 %lang(lv) %{_appdir}/program/localization/lv
 %lang(nb) %{_appdir}/program/localization/nb_NO
 %lang(nl_BE) %{_appdir}/program/localization/nl_BE
-%lang(nl_NL) %{_appdir}/program/localization/nl_NL
+%lang(nl) %{_appdir}/program/localization/nl_NL
 %lang(nn) %{_appdir}/program/localization/nn_NO
 %lang(pl) %{_appdir}/program/localization/pl
 %lang(pt_BR) %{_appdir}/program/localization/pt_BR
-%lang(pt_PT) %{_appdir}/program/localization/pt_PT
+%lang(pt) %{_appdir}/program/localization/pt_PT
 %lang(ro) %{_appdir}/program/localization/ro
 %lang(ru) %{_appdir}/program/localization/ru
 %lang(se) %{_appdir}/program/localization/se
