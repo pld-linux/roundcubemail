@@ -9,7 +9,7 @@
 #define		_svn	svn445
 %define		_snap	20070318
 #define		_beta	beta2
-%define		_rel	0.4
+%define		_rel	0.9
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -72,11 +72,11 @@ install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
 	$RPM_BUILD_ROOT%{_appdir}/{config,program,skins}
 
 # Main application part:
-cp -R program/* $RPM_BUILD_ROOT%{_appdir}/program
-install index.php $RPM_BUILD_ROOT%{_appdir}
+cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
+cp -a index.php $RPM_BUILD_ROOT%{_appdir}
 
 # Skins installation (maybe it should be as config??)
-cp -R skins/* $RPM_BUILD_ROOT%{_appdir}/skins
+cp -a skins/* $RPM_BUILD_ROOT%{_appdir}/skins
 
 ## Configuration:
 install config/db.inc.php.dist $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
@@ -98,12 +98,21 @@ if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
 	mkdir -p %{_sysconfdir}
 	if [ -f $d/db.inc.php ]; then
 		[ -f %{_sysconfdir}/db.inc.php ] && mv -f %{_sysconfdir}/db.inc.php{,.rpmorig}
-		cp -f $d/db.inc.php %{_sysconfdir}/db.inc.php
+		cp -af $d/db.inc.php %{_sysconfdir}/db.inc.php
 	fi
 	if [ -f $d/main.inc.php ]; then
 		[ -f %{_sysconfdir}/main.inc.php ] && mv -f %{_sysconfdir}/main.inc.php{,.rpmorig}
-		cp -f $d/main.inc.php %{_sysconfdir}/main.inc.php
+		cp -af $d/main.inc.php %{_sysconfdir}/main.inc.php
 	fi
+fi
+
+%post
+if [ "$1" = 0 ]; then
+%banner -e %{name} <<'EOF'
+To customize installed languages set
+ %%_install_langs in /etc/rpm/macros
+
+EOF
 fi
 
 %triggerin -- apache1 < 1.3.37-3, apache1-base
@@ -130,7 +139,57 @@ fi
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
 %dir %{_appdir}/program
-%{_appdir}/program/*
+%{_appdir}/program/*.gif
+%{_appdir}/program/include
+%{_appdir}/program/js
+%{_appdir}/program/lib
+%{_appdir}/program/steps
+%dir %{_appdir}/program/localization
+%{_appdir}/program/localization/index.inc
+%lang(am) %{_appdir}/program/localization/am
+%lang(ar) %{_appdir}/program/localization/ar
+%lang(bg) %{_appdir}/program/localization/bg
+%lang(bs) %{_appdir}/program/localization/bs_BA
+%lang(ca) %{_appdir}/program/localization/ca
+%lang(cz) %{_appdir}/program/localization/cz
+%lang(da) %{_appdir}/program/localization/da
+%lang(de_CH) %{_appdir}/program/localization/de_CH
+%lang(de_DE) %{_appdir}/program/localization/de_DE
+%lang(el) %{_appdir}/program/localization/el
+%lang(en_GN) %{_appdir}/program/localization/en_GB
+%lang(en_US) %{_appdir}/program/localization/en_US
+%lang(es) %{_appdir}/program/localization/es
+%lang(et) %{_appdir}/program/localization/et_EE
+%lang(eu) %{_appdir}/program/localization/eu
+%lang(fi) %{_appdir}/program/localization/fi
+%lang(fr) %{_appdir}/program/localization/fr
+%lang(hr) %{_appdir}/program/localization/hr
+%lang(hu) %{_appdir}/program/localization/hu
+%lang(id) %{_appdir}/program/localization/id_ID
+%lang(it) %{_appdir}/program/localization/it
+%lang(ja) %{_appdir}/program/localization/ja
+%lang(lt) %{_appdir}/program/localization/lt
+%lang(lv) %{_appdir}/program/localization/lv
+%lang(nb) %{_appdir}/program/localization/nb_NO
+%lang(nl_BE) %{_appdir}/program/localization/nl_BE
+%lang(nl_NL) %{_appdir}/program/localization/nl_NL
+%lang(nn) %{_appdir}/program/localization/nn_NO
+%lang(pl) %{_appdir}/program/localization/pl
+%lang(pt_BR) %{_appdir}/program/localization/pt_BR
+%lang(pt_PT) %{_appdir}/program/localization/pt_PT
+%lang(ro) %{_appdir}/program/localization/ro
+%lang(ru) %{_appdir}/program/localization/ru
+%lang(se) %{_appdir}/program/localization/se
+%lang(si) %{_appdir}/program/localization/si
+%lang(sk) %{_appdir}/program/localization/sk
+%lang(sr) %{_appdir}/program/localization/sr_cyrillic
+%lang(sr@Latn) %{_appdir}/program/localization/sr_latin
+%lang(th) %{_appdir}/program/localization/th
+%lang(tr) %{_appdir}/program/localization/tr
+%lang(tw) %{_appdir}/program/localization/tw
+%lang(vn) %{_appdir}/program/localization/vn
+%lang(zh_CN) %{_appdir}/program/localization/zh_CN
+
 %dir %{_appdir}/skins
 %{_appdir}/skins/default
 %dir %attr(770,root,http) %{_applogdir}
