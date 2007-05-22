@@ -9,7 +9,7 @@
 %define		_svn	583
 #%define		_snap	20070521
 #define		_beta	beta2
-%define		_rel	0.13
+%define		_rel	0.14
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
