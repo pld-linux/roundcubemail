@@ -9,7 +9,7 @@
 %define		_svn	583
 #%define		_snap	20070521
 #define		_beta	beta2
-%define		_rel	0.14
+%define		_rel	0.15
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -86,10 +86,11 @@ find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -pr
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
-	$RPM_BUILD_ROOT%{_appdir}/{config,program,skins}
+	$RPM_BUILD_ROOT%{_appdir}/{bin,config,program,skins}
 
 # Main application part:
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
+cp -a bin/*.php $RPM_BUILD_ROOT%{_appdir}/bin
 cp -a index.php $RPM_BUILD_ROOT%{_appdir}
 
 # Skins installation
@@ -153,6 +154,8 @@ fi
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
 %dir %{_appdir}
 %{_appdir}/*.php
+%dir %{_appdir}/bin
+%{_appdir}/bin/*.php
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
 %dir %{_appdir}/program
