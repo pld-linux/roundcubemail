@@ -6,8 +6,8 @@
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
-#define		_svn	svn445
-%define		_snap	20070318
+%define		_svn	583
+#%define		_snap	20070521
 #define		_beta	beta2
 %define		_rel	0.13
 Summary:	RoundCube Webmail
@@ -18,12 +18,13 @@ Release:	4.%{?_svn}%{?_snap}%{?_beta}.%{_rel}
 License:	GPL v2
 Group:		Applications/WWW
 #Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
-#Source0:	%{name}-%{version}%{_svn}.tar.bz2
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
-# Source0-md5:	3e4dc0f840e51a76524f55914ed644e5
+Source0:	%{name}-20070522.%{_svn}.tar.bz2
+# Source0-md5:	6cb73a6cd1d96607bb3c5a36d96d009b
+#Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
 Source1:	%{name}.config
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
+Patch2:		%{name}-tz.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -72,9 +73,10 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q -n %{name}-%{?_snap:nightly-%{_snap}}%{!?_snap:%{version}%{?_svn}%{?_beta}}
+%setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 find -name .svn | xargs -r rm -rf
 
@@ -161,6 +163,7 @@ fi
 %{_appdir}/program/steps
 %dir %{_appdir}/program/localization
 %{_appdir}/program/localization/index.inc
+
 %lang(am) %{_appdir}/program/localization/am
 %lang(ar) %{_appdir}/program/localization/ar
 %lang(bg) %{_appdir}/program/localization/bg
@@ -168,42 +171,46 @@ fi
 %lang(ca) %{_appdir}/program/localization/ca
 %lang(cz) %{_appdir}/program/localization/cz
 %lang(da) %{_appdir}/program/localization/da
-%lang(de_CH) %{_appdir}/program/localization/de_CH
 %lang(de) %{_appdir}/program/localization/de_DE
+%lang(de_CH) %{_appdir}/program/localization/de_CH
 %lang(el) %{_appdir}/program/localization/el
 %lang(en_GB) %{_appdir}/program/localization/en_GB
 %lang(en_US) %{_appdir}/program/localization/en_US
 %lang(es) %{_appdir}/program/localization/es
 %lang(et) %{_appdir}/program/localization/et_EE
 %lang(eu) %{_appdir}/program/localization/eu
+%lang(fa) %{_appdir}/program/localization/fa
 %lang(fi) %{_appdir}/program/localization/fi
 %lang(fr) %{_appdir}/program/localization/fr
+%lang(hi) %{_appdir}/program/localization/hi
 %lang(hr) %{_appdir}/program/localization/hr
 %lang(hu) %{_appdir}/program/localization/hu
 %lang(id) %{_appdir}/program/localization/id_ID
 %lang(it) %{_appdir}/program/localization/it
 %lang(ja) %{_appdir}/program/localization/ja
+%lang(kur_KU) %{_appdir}/program/localization/kur_KU
 %lang(lt) %{_appdir}/program/localization/lt
 %lang(lv) %{_appdir}/program/localization/lv
 %lang(nb) %{_appdir}/program/localization/nb_NO
-%lang(nl_BE) %{_appdir}/program/localization/nl_BE
 %lang(nl) %{_appdir}/program/localization/nl_NL
+%lang(nl_BE) %{_appdir}/program/localization/nl_BE
 %lang(nn) %{_appdir}/program/localization/nn_NO
 %lang(pl) %{_appdir}/program/localization/pl
-%lang(pt_BR) %{_appdir}/program/localization/pt_BR
 %lang(pt) %{_appdir}/program/localization/pt_PT
+%lang(pt_BR) %{_appdir}/program/localization/pt_BR
 %lang(ro) %{_appdir}/program/localization/ro
 %lang(ru) %{_appdir}/program/localization/ru
 %lang(se) %{_appdir}/program/localization/se
 %lang(si) %{_appdir}/program/localization/si
 %lang(sk) %{_appdir}/program/localization/sk
+%lang(sl) %{_appdir}/program/localization/sl
 %lang(sr) %{_appdir}/program/localization/sr_cyrillic
 %lang(sr@Latn) %{_appdir}/program/localization/sr_latin
 %lang(th) %{_appdir}/program/localization/th
 %lang(tr) %{_appdir}/program/localization/tr
-%lang(tw) %{_appdir}/program/localization/tw
 %lang(vn) %{_appdir}/program/localization/vn
 %lang(zh_CN) %{_appdir}/program/localization/zh_CN
+%lang(zh_TW) %{_appdir}/program/localization/zh_TW
 
 %dir %{_appdir}/skins
 %dir %attr(770,root,http) %{_applogdir}
