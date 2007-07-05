@@ -8,20 +8,40 @@
 #
 %define		_svn	583
 #%define		_snap	20070521
-#define		_beta	beta2
-%define		_rel	0.15
+%define		_beta	rc1
+%define		_rel	0.1
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
-Release:	5.%{_svn}.%{_rel}
+#Release:	5.%{_svn}.%{_rel}
+Release:	5.%{_beta}.%{_rel}
 License:	GPL v2
 Group:		Applications/WWW
-#Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}%{_beta}.tar.gz
-Source0:	%{name}-20070522.%{_svn}.tar.bz2
-# Source0-md5:	6cb73a6cd1d96607bb3c5a36d96d009b
+Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_beta}.1.tar.gz
+# Source0-md5:	bfb27b1022255306901166bdcbcb7a2c
 #Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
 Source1:	%{name}.config
+Source2:	http://dl.sourceforge.net/roundcubemail/roundcube_croatian-%{version}-%{_beta}.tar.gz
+# Source2-md5:	d267a221bc918ca7f2fec628daf0f5b6
+Source3:	http://dl.sourceforge.net/roundcubemail/roundcube_euskara-%{version}-%{_beta}.tar.gz
+# Source3-md5:	56e3bbb000ebb469239ae30310246fb9
+Source4:	http://dl.sourceforge.net/roundcubemail/roundcube_finnish-%{version}-%{_beta}.tar.gz
+# Source4-md5:	22509cafb0148353aa464284be3e9e6a
+Source5:	http://dl.sourceforge.net/roundcubemail/roundcube_greek-%{version}-%{_beta}.tar.gz
+# Source5-md5:	8c59c63e4384bbc4ef6fdaeb789eb24e
+Source6:	http://dl.sourceforge.net/roundcubemail/roundcube_hungarian-%{version}-%{_beta}.tar.gz
+# Source6-md5:	ae06a1a38663f4624e0a2465a7bbfee2
+Source7:	http://dl.sourceforge.net/roundcubemail/roundcube_irish-%{version}-%{_beta}.tar.gz
+# Source7-md5:	1ecd874a9d768a044ac06ea742aa6a28
+Source8:	http://dl.sourceforge.net/roundcubemail/roundcube_japanese-%{version}-%{_beta}.tar.gz
+# Source8-md5:	fc4cc39d7037dc76a949936abaa33d04
+Source9:	http://dl.sourceforge.net/roundcubemail/roundcube_macedonian-%{version}-%{_beta}.tar.gz
+# Source9-md5:	1de279925ad0535ed433227978922288
+Source10:	http://dl.sourceforge.net/roundcubemail/roundcube_polish-%{version}-%{_beta}.tar.gz
+# Source10-md5:	7eefd644446bb187030160531a34fce4
+Source11:	http://dl.sourceforge.net/roundcubemail/roundcube_turkish-%{version}-%{_beta}.tar.gz
+# Source11-md5:	99f02f05d54d8623e226772a316d0a0a
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
@@ -73,10 +93,23 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q -n %{name}
+%setup -q -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -n %{name}-%{version}-%{_beta}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+cd program/localization/
+tar -zxvf %{SOURCE2}
+tar -zxvf %{SOURCE3}
+tar -zxvf %{SOURCE4}
+tar -zxvf %{SOURCE5}
+tar -zxvf %{SOURCE6}
+tar -zxvf %{SOURCE7}
+tar -zxvf %{SOURCE8}
+tar -zxvf %{SOURCE9}
+tar -zxvf %{SOURCE10}
+tar -zxvf %{SOURCE11}
+cd ../../
 
 find -name .svn | xargs -r rm -rf
 
@@ -168,9 +201,7 @@ fi
 %{_appdir}/program/localization/index.inc
 
 %lang(am) %{_appdir}/program/localization/am
-%lang(ar) %{_appdir}/program/localization/ar
 %lang(bg) %{_appdir}/program/localization/bg
-%lang(bs) %{_appdir}/program/localization/bs_BA
 %lang(ca) %{_appdir}/program/localization/ca
 %lang(cz) %{_appdir}/program/localization/cz
 %lang(da) %{_appdir}/program/localization/da
@@ -182,22 +213,18 @@ fi
 %lang(es) %{_appdir}/program/localization/es
 %lang(et) %{_appdir}/program/localization/et_EE
 %lang(eu) %{_appdir}/program/localization/eu
-%lang(fa) %{_appdir}/program/localization/fa
 %lang(fi) %{_appdir}/program/localization/fi
 %lang(fr) %{_appdir}/program/localization/fr
-%lang(hi) %{_appdir}/program/localization/hi
+%lang(ga) %{_appdir}/program/localization/ga
 %lang(hr) %{_appdir}/program/localization/hr
 %lang(hu) %{_appdir}/program/localization/hu
-%lang(id) %{_appdir}/program/localization/id_ID
 %lang(it) %{_appdir}/program/localization/it
 %lang(ja) %{_appdir}/program/localization/ja
-%lang(kur_KU) %{_appdir}/program/localization/kur_KU
 %lang(lt) %{_appdir}/program/localization/lt
 %lang(lv) %{_appdir}/program/localization/lv
+%lang(mk) %{_appdir}/program/localization/mk
 %lang(nb) %{_appdir}/program/localization/nb_NO
 %lang(nl) %{_appdir}/program/localization/nl_NL
-%lang(nl_BE) %{_appdir}/program/localization/nl_BE
-%lang(nn) %{_appdir}/program/localization/nn_NO
 %lang(pl) %{_appdir}/program/localization/pl
 %lang(pt) %{_appdir}/program/localization/pt_PT
 %lang(pt_BR) %{_appdir}/program/localization/pt_BR
@@ -207,12 +234,7 @@ fi
 %lang(si) %{_appdir}/program/localization/si
 %lang(sk) %{_appdir}/program/localization/sk
 %lang(sl) %{_appdir}/program/localization/sl
-%lang(sr) %{_appdir}/program/localization/sr_cyrillic
-%lang(sr@Latn) %{_appdir}/program/localization/sr_latin
-%lang(th) %{_appdir}/program/localization/th
 %lang(tr) %{_appdir}/program/localization/tr
-%lang(vn) %{_appdir}/program/localization/vn
-%lang(zh_CN) %{_appdir}/program/localization/zh_CN
 %lang(zh_TW) %{_appdir}/program/localization/zh_TW
 
 %dir %{_appdir}/skins
