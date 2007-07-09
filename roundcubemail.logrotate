@@ -1,0 +1,8 @@
+/var/log/roundcube/* {
+	olddir /var/log/archiv/roundcube
+	create 660 http logs
+	monthly
+	postrotate
+		/sbin/service httpd flush-logs > /dev/null
+	endscript
+}
