@@ -1,6 +1,5 @@
 # TODO:
 # - prepare config for lighttp
-# - add logrotate file
 # - it has PEAR boundled inside - use system ones
 # - use pear-deps system?
 # - use system js/tiny_mce
@@ -9,7 +8,7 @@
 %define		_svn	583
 #%define		_snap	20070521
 %define		_beta	rc1
-%define		_rel	0.1
+%define		_rel	0.5
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -42,6 +41,7 @@ Source10:	http://dl.sourceforge.net/roundcubemail/roundcube_polish-%{version}-%{
 # Source10-md5:	7eefd644446bb187030160531a34fce4
 Source11:	http://dl.sourceforge.net/roundcubemail/roundcube_turkish-%{version}-%{_beta}.tar.gz
 # Source11-md5:	99f02f05d54d8623e226772a316d0a0a
+Source20:	%{name}.logrotate
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
@@ -62,6 +62,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_appdir		%{_datadir}/%{_webapp}
 %define		_appdatadir	/var/lib/roundcube
 %define		_applogdir	/var/log/roundcube
+%define		_archivlogdir	/var/log/archiv/roundcube
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client with an
@@ -118,8 +119,8 @@ find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -pr
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_sysconfdir}} \
-	$RPM_BUILD_ROOT%{_appdir}/{bin,config,program,skins}
+install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivlogdir},%{_sysconfdir}} \
+	$RPM_BUILD_ROOT{%{_appdir}/{bin,config,program,skins},/etc/logrotate.d}
 
 # Main application part:
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
@@ -137,6 +138,7 @@ ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+install %{SOURCE20} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -185,6 +187,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %dir %{_appdir}
 %{_appdir}/*.php
 %dir %{_appdir}/bin
@@ -239,6 +242,7 @@ fi
 
 %dir %{_appdir}/skins
 %dir %attr(770,root,http) %{_applogdir}
+%dir %attr(751,root,logs) %{_archivlogdir}
 %dir %attr(770,root,http) %{_appdatadir}
 # %ghost logfile
 
