@@ -62,7 +62,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_appdir		%{_datadir}/%{_webapp}
 %define		_appdatadir	/var/lib/roundcube
 %define		_applogdir	/var/log/roundcube
-%define		_archivlogdir	/var/log/archiv/roundcube
+%define		_archivelogdir	/var/log/archive/roundcube
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client with an
@@ -119,7 +119,7 @@ find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -pr
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivlogdir},%{_sysconfdir}} \
+install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
 	$RPM_BUILD_ROOT{%{_appdir}/{bin,config,program,skins},/etc/logrotate.d}
 
 # Main application part:
@@ -242,7 +242,7 @@ fi
 
 %dir %{_appdir}/skins
 %dir %attr(770,root,http) %{_applogdir}
-%dir %attr(751,root,logs) %{_archivlogdir}
+%dir %attr(751,root,logs) %{_archivelogdir}
 %dir %attr(770,root,http) %{_appdatadir}
 # %ghost logfile
 
