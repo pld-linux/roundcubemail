@@ -53,6 +53,7 @@ Requires:	php(pcre)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
 Requires:	webapps
+Conflicts:	logrotate < 3.7.4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
