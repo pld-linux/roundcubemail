@@ -8,7 +8,7 @@
 #%define		_svn	837
 #%define		_snap	20070927
 %define		_beta	rc2
-%define		_rel	0.1
+%define		_rel	0.2
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -34,6 +34,7 @@ Requires:	php(pcre)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
 Requires:	webapps
+Suggests:	php(openssl)
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
