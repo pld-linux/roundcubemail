@@ -20,7 +20,7 @@ Group:		Applications/WWW
 #Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
 #Source0:	roundcubemail-%{_snap}.%{_svn}.tar.bz2
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_beta}.tar.gz
-# Source0-md5:	a950ed7fff26e64fef20c2765b4890f7
+# Source0-md5:	b345c4ac9541fc8b052971104a4d0d9b
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Patch0:		%{name}-config.patch
