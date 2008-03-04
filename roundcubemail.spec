@@ -32,6 +32,7 @@ Suggests:	php(gd)
 Suggests:	php(iconv)
 Suggests:	php(mcrypt)
 Suggests:	php(openssl)
+Suggests:	php-pecl-fileinfo
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
