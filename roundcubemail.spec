@@ -9,7 +9,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
-Release:	0.2
+Release:	7
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -26,7 +26,6 @@ Requires:	%{name}-skin
 Requires:	php(pcre)
 Requires:	php(sockets)
 # Some php-database backend. Suggests?
-# php-sockets is required to make spellcheck working
 Requires:	webapps
 Suggests:	php(gd)
 Suggests:	php(iconv)
