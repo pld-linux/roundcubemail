@@ -5,19 +5,13 @@
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
-#%define		_snap	20070927
-#%define		_beta	rc2
-#%define		_rel	1
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
-#Release:	6.%{_beta}.%{_rel}
 Release:	0.2
 License:	GPL v2
 Group:		Applications/WWW
-#Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-nightly-%{_snap}.tar.gz
-#Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_beta}.tar.gz
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
 # Source0-md5:	556c6d766519d2f646a94e8dbcecbf2d
 Source1:	%{name}.config
@@ -66,6 +60,7 @@ XHTML-a i CSS 2.
 %package setup
 Summary:	Installer script for RoundCube Webmail
 Group:		Applications/WWW
+Requires:	%{name} = %{version}-%{release}
 
 %description setup
 This package provides installer script for RoundCube Webmail
