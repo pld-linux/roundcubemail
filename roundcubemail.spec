@@ -11,7 +11,7 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.1
+Version:	0.2
 #Release:	6.%{_beta}.%{_rel}
 Release:	0.1
 License:	GPL v2
@@ -62,6 +62,13 @@ obsługę MIME, książkę adresową, operacje na folderach i filtry
 wiadomości. RoundCube Webmail jest napisany w PHP i wymaga bazy danych
 MySQL. Interfejs użytkownika można w pełni obudować skórką przy użyciu
 XHTML-a i CSS 2.
+
+%package installer
+Summary:	Installer script for RoundCube Webmail
+Group:		Applications/WWW
+
+%description installer
+This package provides installer script for RoundCube Webmail
 
 %package skin-default
 Summary:	Default skin for RoundCube Webmail
@@ -166,12 +173,6 @@ fi
 %{_appdir}/bin/*.php
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
-%dir %{_appdir}/installer
-%{_appdir}/installer/*.php
-%{_appdir}/installer/client.js
-%{_appdir}/installer/styles.css
-%{_appdir}/installer/welcome.html
-%{_appdir}/installer/images
 %dir %{_appdir}/program
 %{_appdir}/program/*.gif
 %{_appdir}/program/include
@@ -245,6 +246,15 @@ fi
 %dir %attr(751,root,logs) %{_archivelogdir}
 %dir %attr(770,root,http) %{_appdatadir}
 # %ghost logfile
+
+%files installer
+%defattr(644,root,root,755)
+%dir %{_appdir}/installer
+%{_appdir}/installer/*.php
+%{_appdir}/installer/client.js
+%{_appdir}/installer/styles.css
+%{_appdir}/installer/welcome.html
+%{_appdir}/installer/images
 
 %files skin-default
 %defattr(644,root,root,755)
