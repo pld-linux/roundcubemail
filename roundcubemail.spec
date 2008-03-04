@@ -63,11 +63,11 @@ wiadomości. RoundCube Webmail jest napisany w PHP i wymaga bazy danych
 MySQL. Interfejs użytkownika można w pełni obudować skórką przy użyciu
 XHTML-a i CSS 2.
 
-%package installer
+%package setup
 Summary:	Installer script for RoundCube Webmail
 Group:		Applications/WWW
 
-%description installer
+%description setup
 This package provides installer script for RoundCube Webmail
 
 %package skin-default
@@ -247,7 +247,7 @@ fi
 %dir %attr(770,root,http) %{_appdatadir}
 # %ghost logfile
 
-%files installer
+%files setup
 %defattr(644,root,root,755)
 %dir %{_appdir}/installer
 %{_appdir}/installer/*.php
