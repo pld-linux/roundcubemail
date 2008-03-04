@@ -24,6 +24,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
 Requires:	php(pcre)
+Requires:	php(sockets)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
 Requires:	webapps
