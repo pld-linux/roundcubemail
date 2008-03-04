@@ -185,7 +185,7 @@ fi
 %lang(am) %{_appdir}/program/localization/am
 %lang(ar) %{_appdir}/program/localization/ar
 %lang(bg) %{_appdir}/program/localization/bg
-%lang(bs_BA) %{_appdir}/program/localization/bs_BA
+%lang(bs) %{_appdir}/program/localization/bs_BA
 %lang(ca) %{_appdir}/program/localization/ca
 %lang(cz) %{_appdir}/program/localization/cz
 %lang(da) %{_appdir}/program/localization/da
@@ -201,7 +201,7 @@ fi
 %lang(fa) %{_appdir}/program/localization/fa
 %lang(fi) %{_appdir}/program/localization/fi
 %lang(fr) %{_appdir}/program/localization/fr
-%lang(ga_IE) %{_appdir}/program/localization/ga_IE
+%lang(ga) %{_appdir}/program/localization/ga_IE
 %lang(ge) %{_appdir}/program/localization/ge
 %lang(gl) %{_appdir}/program/localization/gl
 %lang(he) %{_appdir}/program/localization/he
@@ -216,7 +216,7 @@ fi
 %lang(lt) %{_appdir}/program/localization/lt
 %lang(lv) %{_appdir}/program/localization/lv
 %lang(mk) %{_appdir}/program/localization/mk
-%lang(ms_MY) %{_appdir}/program/localization/ms_MY
+%lang(ms) %{_appdir}/program/localization/ms_MY
 %lang(nb) %{_appdir}/program/localization/nb_NO
 %lang(ne) %{_appdir}/program/localization/ne
 %lang(nl) %{_appdir}/program/localization/nl_NL
@@ -231,10 +231,10 @@ fi
 %lang(si) %{_appdir}/program/localization/si
 %lang(sk) %{_appdir}/program/localization/sk
 %lang(sl) %{_appdir}/program/localization/sl
-%lang(sq_AL) %{_appdir}/program/localization/sq_AL
-%lang(sr_cyrillic) %{_appdir}/program/localization/sr_cyrillic
-%lang(sr_latin) %{_appdir}/program/localization/sr_latin
-%lang(th_TH) %{_appdir}/program/localization/th_TH
+%lang(sq) %{_appdir}/program/localization/sq_AL
+%lang(sr) %{_appdir}/program/localization/sr_cyrillic
+%lang(sr@latin) %{_appdir}/program/localization/sr_latin
+%lang(th) %{_appdir}/program/localization/th_TH
 %lang(tr) %{_appdir}/program/localization/tr
 %lang(uk) %{_appdir}/program/localization/uk
 %lang(vn) %{_appdir}/program/localization/vn
