@@ -28,6 +28,9 @@ Requires:	php(sockets)
 # Some php-database backend. Suggests?
 # php-sockets is required to make spellcheck working
 Requires:	webapps
+Suggests:	php(gd)
+Suggests:	php(iconv)
+Suggests:	php(mcrypt)
 Suggests:	php(openssl)
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
