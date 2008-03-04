@@ -64,11 +64,15 @@ XHTML-a i CSS 2.
 
 %package setup
 Summary:	Installer script for RoundCube Webmail
+Summary(pl.UTF-8):	Skrypt instalacyjny RoundCube Webmaila
 Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
 
 %description setup
-This package provides installer script for RoundCube Webmail
+This package provides installer script for RoundCube Webmail.
+
+%description setup -l pl.UTF-8
+Ten pakiet zawiera skrypt instalacyjny RoundCube Webmaila.
 
 %package skin-default
 Summary:	Default skin for RoundCube Webmail
