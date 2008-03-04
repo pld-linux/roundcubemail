@@ -89,7 +89,7 @@ find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -pr
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
-	$RPM_BUILD_ROOT{%{_appdir}/{bin,config,program,skins},/etc/logrotate.d}
+	$RPM_BUILD_ROOT{%{_appdir}/{bin,config,installer,program,skins},/etc/logrotate.d}
 
 # Main application part:
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
@@ -98,6 +98,9 @@ cp -a index.php $RPM_BUILD_ROOT%{_appdir}
 
 # Skins installation
 cp -a skins/* $RPM_BUILD_ROOT%{_appdir}/skins
+
+# Installer part
+cp -a installer/* $RPM_BUILD_ROOT%{_appdir}/installer
 
 ## Configuration:
 install config/db.inc.php.dist $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
@@ -163,6 +166,12 @@ fi
 %{_appdir}/bin/*.php
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
+%dir %{_appdir}/installer
+%{_appdir}/installer/*.php
+%{_appdir}/installer/client.js
+%{_appdir}/installer/styles.css
+%{_appdir}/installer/welcome.html
+%{_appdir}/installer/images
 %dir %{_appdir}/program
 %{_appdir}/program/*.gif
 %{_appdir}/program/include
