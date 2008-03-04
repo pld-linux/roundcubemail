@@ -236,7 +236,6 @@ fi
 %lang(zh_CN) %{_appdir}/program/localization/zh_CN
 %lang(zh_TW) %{_appdir}/program/localization/zh_TW
 
-%dir %{_appdir}/skins
 %dir %attr(770,root,http) %{_applogdir}
 %dir %attr(751,root,logs) %{_archivelogdir}
 %dir %attr(770,root,http) %{_appdatadir}
@@ -253,4 +252,5 @@ fi
 
 %files skin-default
 %defattr(644,root,root,755)
+%dir %{_appdir}/skins
 %{_appdir}/skins/default
