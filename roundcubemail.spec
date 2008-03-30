@@ -13,7 +13,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.1
-Release:	0.%{_rev}.1
+Release:	0.%{_rev}.2
 License:	GPL v2
 Group:		Applications/WWW
 #Source0:	http://nightly.roundcube.net/trunk/%{name}-trunk-%{_rev}-%{_date}.tgz
@@ -24,6 +24,7 @@ Source2:	%{name}.logrotate
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
+Patch3:		%{name}-spam.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -95,6 +96,7 @@ Domyślna skórka dla RoundCube Webmaila.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 find -name .svn | xargs -r rm -rf
 
