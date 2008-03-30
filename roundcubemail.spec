@@ -6,8 +6,8 @@
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
 
-%define		_rev	r1203
-%define		_date	20080321
+%define		_rev	r1223
+%define		_date	20080330
 
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
@@ -16,8 +16,9 @@ Version:	0.1
 Release:	0.%{_rev}.1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://nightly.roundcube.net/trunk/%{name}-trunk-%{_rev}-%{_date}.tgz
-# Source0-md5:	33d3c1feaf98e48a70b2170ce8b4b356
+#Source0:	http://nightly.roundcube.net/trunk/%{name}-trunk-%{_rev}-%{_date}.tgz
+Source0:	%{name}-%{version}-%{_rev}-%{_date}.tar.gz
+# Source0-md5:	0006edead2286908d8145b1be181f110
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Patch0:		%{name}-config.patch
@@ -90,7 +91,7 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -qn %{name}-trunk-%{_rev}-%{_date}
+%setup -qn %{name}-%{version}-%{_rev}-%{_date}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
