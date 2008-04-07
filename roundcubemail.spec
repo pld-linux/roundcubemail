@@ -5,20 +5,24 @@
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 #
+#
+%bcond_with	spamfilter	# Build with spamfilter patch
+
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.1
-Release:	7
+Version:	0.1.1
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	556c6d766519d2f646a94e8dbcecbf2d
+# Source0-md5:	a2bf665acd7f8a6b2b63c92aedefb23f
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
+Patch3:		%{name}-spam.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -90,6 +94,9 @@ Domyślna skórka dla RoundCube Webmaila.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%if %{with spamfilter}
+%patch3 -p1
+%endif
 
 find -name .svn | xargs -r rm -rf
 
@@ -216,6 +223,7 @@ fi
 %lang(it) %{_appdir}/program/localization/it
 %lang(ja) %{_appdir}/program/localization/ja
 %lang(kr) %{_appdir}/program/localization/kr
+%lang(ku) %{_appdir}/program/localization/ku
 %lang(lt) %{_appdir}/program/localization/lt
 %lang(lv) %{_appdir}/program/localization/lv
 %lang(mk) %{_appdir}/program/localization/mk
