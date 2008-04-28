@@ -28,6 +28,7 @@ URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
+Requires:	pho(imap)
 Requires:	php(pcre)
 Requires:	php(sockets)
 # Some php-database backend. Suggests?
