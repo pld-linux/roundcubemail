@@ -7,19 +7,22 @@
 #
 #
 %bcond_with	spamfilter	# Build with spamfilter patch
+%bcond_with	postfixadmin	# Build with postfixadmin support patch
 
+%define	_rc	alpha
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.1.1
-Release:	2.9
+Version:	0.2
+Release:	0.%{_rc}.1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	a2bf665acd7f8a6b2b63c92aedefb23f
+Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_rc}.1.tar.gz
+# Source0-md5:	033fe78ea4b3b8330e13681a18b0e771
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
+Source4:	http://nejc.skoberne.net/rcpfa/rcpfa-1.0.2.tgz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
@@ -28,7 +31,7 @@ URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
-Requires:	pho(imap)
+Requires:	php(imap)
 Requires:	php(pcre)
 Requires:	php(sockets)
 # Some php-database backend. Suggests?
@@ -92,9 +95,9 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{_rc} %{?with_postfixadmin:-a 4}
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1 need to rewrite
 %patch2 -p1
 %if %{with spamfilter}
 %patch3 -p1
@@ -105,6 +108,28 @@ find -name .svn | xargs -r rm -rf
 # undos the source
 find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -print0 | xargs -0 sed -i -e 's,\r$,,'
 
+mv config/db.inc.php.dist config/db.inc.php
+mv config/main.inc.php.dist config/main.inc.php
+%if %{with postfixadmin}
+cp rcpfa-1.0.2/code/forwarding.html skins/default/templates
+cp rcpfa-1.0.2/code/password.html skins/default/templates
+cp rcpfa-1.0.2/code/vacation.html skins/default/templates
+cp rcpfa-1.0.2/code/pfa_forwarding.inc program/steps/settings
+cp rcpfa-1.0.2/code/pfa_password.inc program/steps/settings
+cp rcpfa-1.0.2/code/pfa_vacation.inc program/steps/settings
+cp rcpfa-1.0.2/code/pfa.php program/include
+
+patch -p1 < rcpfa-1.0.2/diffs/app.js.diff
+patch -p1 < rcpfa-1.0.2/diffs/db.inc.php.diff
+patch -p1 < rcpfa-1.0.2/diffs/func.inc.diff
+patch -p1 < rcpfa-1.0.2/diffs/index.php.diff
+patch -p1 < rcpfa-1.0.2/diffs/labels.inc.diff
+patch -p1 < rcpfa-1.0.2/diffs/main.inc.diff
+patch -p1 < rcpfa-1.0.2/diffs/main.inc.php.diff
+patch -p1 < rcpfa-1.0.2/diffs/messages.inc.diff
+patch -p1 < rcpfa-1.0.2/diffs/rcube_user.php.diff
+patch -p1 < rcpfa-1.0.2/diffs/settingstabs.html.diff
+%endif
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
@@ -122,8 +147,8 @@ cp -a skins/* $RPM_BUILD_ROOT%{_appdir}/skins
 cp -a installer/* $RPM_BUILD_ROOT%{_appdir}/installer
 
 ## Configuration:
-install config/db.inc.php.dist $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
-install config/main.inc.php.dist $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
+install config/db.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
+install config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
 ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
 ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
@@ -202,63 +227,62 @@ fi
 %dir %{_appdir}/program/localization
 %{_appdir}/program/localization/index.inc
 
-%lang(am) %{_appdir}/program/localization/am
-%lang(ar) %{_appdir}/program/localization/ar
-%lang(bg) %{_appdir}/program/localization/bg
-%lang(bs) %{_appdir}/program/localization/bs_BA
-%lang(ca) %{_appdir}/program/localization/ca
-%lang(cz) %{_appdir}/program/localization/cz
-%lang(da) %{_appdir}/program/localization/da
-%lang(de) %{_appdir}/program/localization/de_DE
+%lang(ar_SA) %{_appdir}/program/localization/ar_SA
+%lang(bg_BG) %{_appdir}/program/localization/bg_BG
+%lang(bs_BA) %{_appdir}/program/localization/bs_BA
+%lang(ca_ES) %{_appdir}/program/localization/ca_ES
+%lang(cs_CZ) %{_appdir}/program/localization/cs_CZ
+%lang(da_DK) %{_appdir}/program/localization/da_DK
 %lang(de_CH) %{_appdir}/program/localization/de_CH
-%lang(el) %{_appdir}/program/localization/el
+%lang(de_DE) %{_appdir}/program/localization/de_DE
+%lang(el_GR) %{_appdir}/program/localization/el_GR
 %lang(en_GB) %{_appdir}/program/localization/en_GB
 %lang(en_US) %{_appdir}/program/localization/en_US
 %lang(eo) %{_appdir}/program/localization/eo
-%lang(es) %{_appdir}/program/localization/es
-%lang(et) %{_appdir}/program/localization/et_EE
-%lang(eu) %{_appdir}/program/localization/eu
+%lang(es_ES) %{_appdir}/program/localization/es_ES
+%lang(et_EE) %{_appdir}/program/localization/et_EE
+%lang(eu_ES) %{_appdir}/program/localization/eu_ES
 %lang(fa) %{_appdir}/program/localization/fa
-%lang(fi) %{_appdir}/program/localization/fi
-%lang(fr) %{_appdir}/program/localization/fr
-%lang(ga) %{_appdir}/program/localization/ga_IE
-%lang(ge) %{_appdir}/program/localization/ge
-%lang(gl) %{_appdir}/program/localization/gl
-%lang(he) %{_appdir}/program/localization/he
-%lang(hi) %{_appdir}/program/localization/hi
+%lang(fi_FI) %{_appdir}/program/localization/fi_FI
+%lang(fr_FR) %{_appdir}/program/localization/fr_FR
+%lang(ga_IE) %{_appdir}/program/localization/ga_IE
+%lang(gl_ES) %{_appdir}/program/localization/gl_ES
+%lang(he_IL) %{_appdir}/program/localization/he_IL
+%lang(hi_IN) %{_appdir}/program/localization/hi_IN
 %lang(hr) %{_appdir}/program/localization/hr
-%lang(hu) %{_appdir}/program/localization/hu
-%lang(id) %{_appdir}/program/localization/id_ID
-%lang(is) %{_appdir}/program/localization/is
-%lang(it) %{_appdir}/program/localization/it
-%lang(ja) %{_appdir}/program/localization/ja
-%lang(kr) %{_appdir}/program/localization/kr
+%lang(hu_HU) %{_appdir}/program/localization/hu_HU
+%lang(hy_AM) %{_appdir}/program/localization/hy_AM
+%lang(id_ID) %{_appdir}/program/localization/id_ID
+%lang(is_IS) %{_appdir}/program/localization/is_IS
+%lang(it_IT) %{_appdir}/program/localization/it_IT
+%lang(ja_JP) %{_appdir}/program/localization/ja_JP
+%lang(ka_GE) %{_appdir}/program/localization/ka_GE
+%lang(ko_KR) %{_appdir}/program/localization/ko_KR
 %lang(ku) %{_appdir}/program/localization/ku
-%lang(lt) %{_appdir}/program/localization/lt
-%lang(lv) %{_appdir}/program/localization/lv
-%lang(mk) %{_appdir}/program/localization/mk
-%lang(ms) %{_appdir}/program/localization/ms_MY
-%lang(nb) %{_appdir}/program/localization/nb_NO
-%lang(ne) %{_appdir}/program/localization/ne
-%lang(nl) %{_appdir}/program/localization/nl_NL
+%lang(lt_LT) %{_appdir}/program/localization/lt_LT
+%lang(lv_LV) %{_appdir}/program/localization/lv_LV
+%lang(mk_MK) %{_appdir}/program/localization/mk_MK
+%lang(ms_MY) %{_appdir}/program/localization/ms_MY
+%lang(nb_NO) %{_appdir}/program/localization/nb_NO
+%lang(ne_NP) %{_appdir}/program/localization/ne_NP
+%lang(nl_NL) %{_appdir}/program/localization/nl_NL
 %lang(nl_BE) %{_appdir}/program/localization/nl_BE
 %lang(nn) %{_appdir}/program/localization/nn_NO
-%lang(pl) %{_appdir}/program/localization/pl
+%lang(pl) %{_appdir}/program/localization/pl_PL
 %lang(pt) %{_appdir}/program/localization/pt_PT
 %lang(pt_BR) %{_appdir}/program/localization/pt_BR
-%lang(ro) %{_appdir}/program/localization/ro
-%lang(ru) %{_appdir}/program/localization/ru
-%lang(se) %{_appdir}/program/localization/se
-%lang(si) %{_appdir}/program/localization/si
-%lang(sk) %{_appdir}/program/localization/sk
-%lang(sl) %{_appdir}/program/localization/sl
+%lang(ro) %{_appdir}/program/localization/ro_RO
+%lang(ru) %{_appdir}/program/localization/ru_RU
+%lang(si) %{_appdir}/program/localization/si_LK
+%lang(sk) %{_appdir}/program/localization/sk_SK
+%lang(sl) %{_appdir}/program/localization/sl_SI
 %lang(sq) %{_appdir}/program/localization/sq_AL
-%lang(sr) %{_appdir}/program/localization/sr_cyrillic
-%lang(sr@latin) %{_appdir}/program/localization/sr_latin
+%lang(sr) %{_appdir}/program/localization/sr_CS
+%lang(sv) %{_appdir}/program/localization/sv_SE
 %lang(th) %{_appdir}/program/localization/th_TH
-%lang(tr) %{_appdir}/program/localization/tr
-%lang(uk) %{_appdir}/program/localization/uk
-%lang(vn) %{_appdir}/program/localization/vn
+%lang(tr) %{_appdir}/program/localization/tr_TR
+%lang(uk) %{_appdir}/program/localization/uk_UA
+%lang(vn) %{_appdir}/program/localization/vi_VN
 %lang(zh_CN) %{_appdir}/program/localization/zh_CN
 %lang(zh_TW) %{_appdir}/program/localization/zh_TW
 
