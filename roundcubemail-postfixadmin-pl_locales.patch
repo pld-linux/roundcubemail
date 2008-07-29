@@ -1,0 +1,60 @@
+--- roundcubemail/program/localization/pl_PL/labels.inc	2008-06-14 12:33:22.000000000 +0200
++++ roundcubemail-r1531/program/localization/pl_PL/labels.inc	2008-06-15 20:24:35.000000000 +0200
+@@ -285,4 +285,25 @@
+ $labels['sortasc']  = 'Rosnąco';
+ $labels['sortdesc'] = 'Malejąco';
+ 
++// >> pfa patch
++
++$labels['vacation'] = 'Wakacje';
++$labels['titlevacation'] = 'Ustawienia autoodpowiedzi';
++$labels['activevacation'] = 'Aktywna';
++$labels['subjectvacation'] = 'Temat powiadomienia';
++$labels['bodyvacation'] = 'Treść powiadomienia';
++
++$labels['titlepassword'] = 'Zmień hasło';
++$labels['oldpassword'] = 'Podaj stare hasło';
++$labels['newpassword'] = 'Podaj nowe hasło';
++$labels['new2password'] = 'Powtórz nowe hasło';
++
++$labels['forwarding'] = 'Aliasy';
++$labels['titleforwarding'] = 'Przekierowania na inne adresy e-mail';
++$labels['aliasesforwarding'] = 'Przekieruj pocztę na te adresy e-mail (jeden wpis w linii)';
++$labels['localforwardingtrue'] = 'Dostarcz również do lokalnej skrzynki';
++$labels['localforwardingfalse'] = 'Tylko przekieruj';
++
++// << pfa patch
++
+ ?>
+--- roundcubemail/program/localization/pl_PL/messages.inc	2008-06-14 12:33:22.000000000 +0200
++++ roundcubemail-r1531/program/localization/pl_PL/messages.inc	2008-06-15 20:24:35.000000000 +0200
+@@ -80,4 +80,28 @@
+ $messages['addsubfolderhint'] = 'Ten folder zostanie utworzony jako podfolder aktualnie wybranego.';
+ $messages['forbiddencharacter'] = 'Nazwa folderu zawiera niedozwolony znak';
+ 
++// >> pfa patch
++
++// Enabling/disabling each function
++$messages['vacationdisabled'] = 'Wybacz, nie masz uprawnień do zarządzania autoodpowiedziami.';
++$messages['passworddisabled'] = 'Wybacz, nie masz uprawnień do zmiany hasła.';
++$messages['forwardingdisabled'] = 'Wybacz, nie masz uprawnień do zarządzania aliasami.';
++
++// Vacation
++$messages['vacationmodified'] = 'Pomyślnie zmodyfikowano autoodpowiedzi.';
++$messages['novacation'] = 'Autoodpowiedź ustawiona, ale brakuje treści.';
++
++// Password
++$messages['wrong2password'] = 'Wprowadzone hasła nie pasują.';
++$messages['wrongoldpassword'] = 'Aktualne hasło jest niepoprawne.';
++$messages['tooshortpassword'] = 'Nowe hasło jest za krótkie.';
++$messages['passwordmodified'] = 'Hasło zostało zmienione.';
++
++// Forwarding
++$messages['forwardingmodified'] = 'Pomyślnie zmodyfikowano aliasy.';
++$messages['emptyforwarding'] = 'Musi być podany co najmiej jeden adres e-mail.';
++$messages['forwardingsyntaxerror'] = 'Co najmiej jeden z adresów jest niepoprawny.';
++
++// << pfa patch
++
+ ?>
+\ No newline at end of file
