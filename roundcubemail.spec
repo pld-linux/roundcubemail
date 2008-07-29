@@ -14,7 +14,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.2
-Release:	0.%{_rc}.1
+Release:	0.%{_rc}.2
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_rc}.1.tar.gz
@@ -27,10 +27,12 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
 Patch3:		%{name}-spam.patch
+Patch4:		%{name}-postfixadmin-pl_locales.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
+Requires:	php(dom)
 Requires:	php(imap)
 Requires:	php(pcre)
 Requires:	php(sockets)
@@ -101,6 +103,9 @@ Domyślna skórka dla RoundCube Webmaila.
 %patch2 -p1
 %if %{with spamfilter}
 %patch3 -p1
+%endif
+%if %{with postfixadmin}
+%patch4 -p1
 %endif
 
 find -name .svn | xargs -r rm -rf
