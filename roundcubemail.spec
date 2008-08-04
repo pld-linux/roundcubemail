@@ -36,6 +36,7 @@ Requires:	php(dom)
 Requires:	php(imap)
 Requires:	php(pcre)
 Requires:	php(sockets)
+Requires:	php-pear-DB
 # Some php-database backend. Suggests?
 Requires:	webapps
 Suggests:	php(gd)
