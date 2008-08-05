@@ -9,12 +9,13 @@
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
-%define	_rc	alpha
+%define	_rc		alpha
+%define _rcpfa_ver	1.0.3
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.2
-Release:	0.%{_rc}.2
+Release:	0.%{_rc}.3
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_rc}.1.tar.gz
@@ -22,7 +23,7 @@ Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{_rc}.1.tar
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
-Source4:	http://nejc.skoberne.net/rcpfa/rcpfa-1.0.2.tgz
+Source4:	http://nejc.skoberne.net/rcpfa/rcpfa-%{_rcpfa_ver}.tgz
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
@@ -117,24 +118,24 @@ find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -pr
 mv config/db.inc.php.dist config/db.inc.php
 mv config/main.inc.php.dist config/main.inc.php
 %if %{with postfixadmin}
-cp rcpfa-1.0.2/code/forwarding.html skins/default/templates
-cp rcpfa-1.0.2/code/password.html skins/default/templates
-cp rcpfa-1.0.2/code/vacation.html skins/default/templates
-cp rcpfa-1.0.2/code/pfa_forwarding.inc program/steps/settings
-cp rcpfa-1.0.2/code/pfa_password.inc program/steps/settings
-cp rcpfa-1.0.2/code/pfa_vacation.inc program/steps/settings
-cp rcpfa-1.0.2/code/pfa.php program/include
+cp rcpfa-%{_rcpfa_ver}/code/forwarding.html skins/default/templates
+cp rcpfa-%{_rcpfa_ver}/code/password.html skins/default/templates
+cp rcpfa-%{_rcpfa_ver}/code/vacation.html skins/default/templates
+cp rcpfa-%{_rcpfa_ver}/code/pfa_forwarding.inc program/steps/settings
+cp rcpfa-%{_rcpfa_ver}/code/pfa_password.inc program/steps/settings
+cp rcpfa-%{_rcpfa_ver}/code/pfa_vacation.inc program/steps/settings
+cp rcpfa-%{_rcpfa_ver}/code/pfa.php program/include
 
-patch -p1 < rcpfa-1.0.2/diffs/app.js.diff
-patch -p1 < rcpfa-1.0.2/diffs/db.inc.php.diff
-patch -p1 < rcpfa-1.0.2/diffs/func.inc.diff
-patch -p1 < rcpfa-1.0.2/diffs/index.php.diff
-patch -p1 < rcpfa-1.0.2/diffs/labels.inc.diff
-patch -p1 < rcpfa-1.0.2/diffs/main.inc.diff
-patch -p1 < rcpfa-1.0.2/diffs/main.inc.php.diff
-patch -p1 < rcpfa-1.0.2/diffs/messages.inc.diff
-patch -p1 < rcpfa-1.0.2/diffs/rcube_user.php.diff
-patch -p1 < rcpfa-1.0.2/diffs/settingstabs.html.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/app.js.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/db.inc.php.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/func.inc.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/index.php.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/labels.inc.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/main.inc.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/main.inc.php.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/messages.inc.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/rcube_user.php.diff
+patch -p1 < rcpfa-%{_rcpfa_ver}/diffs/settingstabs.html.diff
 %endif
 %install
 rm -rf $RPM_BUILD_ROOT
