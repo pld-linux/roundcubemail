@@ -1,15 +1,15 @@
 --- ./config/main.inc.php.dist.org	2006-06-17 17:42:13.000000000 +0000
 +++ ./config/main.inc.php.dist	2006-06-17 17:43:35.000000000 +0000
-@@ -83,10 +83,10 @@
- $rcmail_config['skin_path'] = 'skins/default/';
+@@ -30,10 +30,10 @@
  
- // use this folder to store temp files (must be writebale for apache user)
--$rcmail_config['temp_dir'] = 'temp/';
-+$rcmail_config['temp_dir'] = '/var/lib/roundcube';
- 
- // use this folder to store log files (must be writebale for apache user)
+ // use this folder to store log files (must be writeable for apache user)
+ // This is used by the 'file' log driver.
 -$rcmail_config['log_dir'] = 'logs/';
 +$rcmail_config['log_dir'] = '/var/log/roundcube';
  
- // session lifetime in minutes
- $rcmail_config['session_lifetime'] = 10;
+ // use this folder to store temp files (must be writeable for apache user)
+-$rcmail_config['temp_dir'] = 'temp/';
++$rcmail_config['temp_dir'] = '/var/lib/roundcube';
+ 
+ // enable caching of messages and mailbox data in the local database.
+ // this is recommended if the IMAP server does not run on the same machine
