@@ -9,9 +9,9 @@
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
-%define		subver	alpha
+%define		subver	beta
 %define		rcpfa_ver	1.0.3
-%define		rel		3
+%define		rel		1
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -19,8 +19,8 @@ Version:	0.2
 Release:	0.%{subver}.%{rel}
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.1.tar.gz
-# Source0-md5:	033fe78ea4b3b8330e13681a18b0e771
+Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
+# Source0-md5:	7e769ad49786dfec11e8e530676f106e
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
@@ -237,6 +237,7 @@ fi
 %{_appdir}/program/localization/index.inc
 
 %lang(ar_SA) %{_appdir}/program/localization/ar_SA
+%lang(az) %{_appdir}/program/localization/az_AZ
 %lang(bg) %{_appdir}/program/localization/bg_BG
 %lang(bs) %{_appdir}/program/localization/bs_BA
 %lang(ca_ES) %{_appdir}/program/localization/ca_ES
@@ -258,7 +259,7 @@ fi
 %lang(gl) %{_appdir}/program/localization/gl_ES
 %lang(he) %{_appdir}/program/localization/he_IL
 %lang(hi) %{_appdir}/program/localization/hi_IN
-%lang(hr) %{_appdir}/program/localization/hr
+%lang(hr) %{_appdir}/program/localization/hr_HR
 %lang(hu) %{_appdir}/program/localization/hu_HU
 %lang(hy) %{_appdir}/program/localization/hy_AM
 %lang(id) %{_appdir}/program/localization/id_ID
