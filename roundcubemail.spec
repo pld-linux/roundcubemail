@@ -240,7 +240,7 @@ fi
 %lang(az) %{_appdir}/program/localization/az_AZ
 %lang(bg) %{_appdir}/program/localization/bg_BG
 %lang(bs) %{_appdir}/program/localization/bs_BA
-%lang(ca_ES) %{_appdir}/program/localization/ca_ES
+%lang(ca) %{_appdir}/program/localization/ca_ES
 %lang(cs) %{_appdir}/program/localization/cs_CZ
 %lang(da) %{_appdir}/program/localization/da_DK
 %lang(de_CH) %{_appdir}/program/localization/de_CH
