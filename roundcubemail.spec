@@ -10,8 +10,7 @@
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
 %define		subver	beta
-%define		rcpfa_ver	1.0.3
-%define		rel		1
+%define		rel		2
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -24,7 +23,8 @@ Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.ta
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
-Source4:	http://nejc.skoberne.net/rcpfa/rcpfa-%{rcpfa_ver}.tgz
+Source4:	http://nejc.skoberne.net/wp-content/uploads/2008/11/rcpfa-104.tgz
+# Source4-md5:	2b2ea2f284abd15128f1e3d7475effcf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-faq-page.patch
 Patch2:		%{name}-tz.patch
