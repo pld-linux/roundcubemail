@@ -9,8 +9,8 @@
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
-%define		subver	beta
-%define		rel		2
+%define		subver	stable
+%define		rel	1
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -19,7 +19,7 @@ Release:	0.%{subver}.%{rel}
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	7e769ad49786dfec11e8e530676f106e
+# Source0-md5:	a029f57239fe32ea133357f4208f753f
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
@@ -242,6 +242,7 @@ fi
 %lang(bs) %{_appdir}/program/localization/bs_BA
 %lang(ca) %{_appdir}/program/localization/ca_ES
 %lang(cs) %{_appdir}/program/localization/cs_CZ
+%lang(cy) %{_appdir}/program/localization/cy_GB
 %lang(da) %{_appdir}/program/localization/da_DK
 %lang(de_CH) %{_appdir}/program/localization/de_CH
 %lang(de) %{_appdir}/program/localization/de_DE
