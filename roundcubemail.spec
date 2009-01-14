@@ -16,6 +16,7 @@ Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.2
 Release:	0.%{subver}.%{rel}
+%define	rcpfa_ver	1.0.4
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
@@ -139,6 +140,7 @@ patch -p1 < rcpfa/diffs/messages.inc.diff
 patch -p1 < rcpfa/diffs/rcube_user.php.diff
 patch -p1 < rcpfa/diffs/settingstabs.html.diff
 %endif
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
