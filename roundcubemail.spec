@@ -10,7 +10,7 @@
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
 %define		subver	stable
-%define		rel	1
+%define		rel	2
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
