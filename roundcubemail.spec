@@ -9,28 +9,25 @@
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
-%define		subver		stable
-%define		rel			2
 %define		rcpfa_ver	1.0.4
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.2
-Release:	0.%{subver}.%{rel}
+Version:	0.2.1
+Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	a029f57239fe32ea133357f4208f753f
+Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
+# Source0-md5:	d49bfea590cdca3d6b221903217e0c55
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
 Source4:	http://nejc.skoberne.net/wp-content/uploads/2008/11/rcpfa-104.tgz
 # Source4-md5:	2b2ea2f284abd15128f1e3d7475effcf
 Patch0:		%{name}-config.patch
-Patch1:		%{name}-faq-page.patch
-Patch2:		%{name}-tz.patch
-Patch3:		%{name}-spam.patch
-Patch4:		%{name}-postfixadmin-pl_locales.patch
+Patch1:		%{name}-spam.patch
+Patch2:		%{name}-postfixadmin-pl_locales.patch
+Patch3:		%{name}-faq-page.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -100,16 +97,15 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q -n %{name}-%{version}-%{subver} %{?with_postfixadmin:-a 4}
+%setup -q %{?with_postfixadmin:-a 4}
 %patch0 -p1
-#%patch1 -p1 need to rewrite
-%patch2 -p1
 %if %{with spamfilter}
-%patch3 -p1
+%patch1 -p1
 %endif
 %if %{with postfixadmin}
-%patch4 -p1
+%patch2 -p1
 %endif
+#%patch3 -p1
 
 find -name .svn | xargs -r rm -rf
 
@@ -241,20 +237,23 @@ fi
 %{_appdir}/program/localization/index.inc
 
 %lang(ar_SA) %{_appdir}/program/localization/ar_SA
+%lang(ast) %{_appdir}/program/localization/ast
 %lang(az) %{_appdir}/program/localization/az_AZ
 %lang(bg) %{_appdir}/program/localization/bg_BG
+%lang(bn_BD) %{_appdir}/program/localization/bn_BD
 %lang(bs) %{_appdir}/program/localization/bs_BA
 %lang(ca) %{_appdir}/program/localization/ca_ES
 %lang(cs) %{_appdir}/program/localization/cs_CZ
 %lang(cy) %{_appdir}/program/localization/cy_GB
 %lang(da) %{_appdir}/program/localization/da_DK
-%lang(de_CH) %{_appdir}/program/localization/de_CH
 %lang(de) %{_appdir}/program/localization/de_DE
+%lang(de_CH) %{_appdir}/program/localization/de_CH
 %lang(el) %{_appdir}/program/localization/el_GR
 %lang(en_GB) %{_appdir}/program/localization/en_GB
 %lang(en_US) %{_appdir}/program/localization/en_US
 %lang(eo) %{_appdir}/program/localization/eo
 %lang(es) %{_appdir}/program/localization/es_ES
+%lang(es_AR) %{_appdir}/program/localization/es_AR
 %lang(et) %{_appdir}/program/localization/et_EE
 %lang(eu) %{_appdir}/program/localization/eu_ES
 %lang(fa) %{_appdir}/program/localization/fa
@@ -305,7 +304,8 @@ fi
 %dir %attr(770,root,http) %{_applogdir}
 %dir %attr(751,root,logs) %{_archivelogdir}
 %dir %attr(770,root,http) %{_appdatadir}
-# %ghost logfile
+
+# TODO: %ghost logfile(s)
 
 %files setup
 %defattr(644,root,root,755)
