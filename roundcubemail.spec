@@ -36,6 +36,7 @@ Requires:	php(dom)
 Requires:	php(imap)
 Requires:	php(pcre)
 Requires:	php(sockets)
+Requires:	rpm-whiteout >= 1.22
 Requires:	php-pear-DB
 Requires:	webapps
 Suggests:	php(gd)
@@ -88,6 +89,7 @@ Ten pakiet zawiera skrypt instalacyjny RoundCube Webmaila.
 Summary:	Default skin for RoundCube Webmail
 Summary(pl.UTF-8):	Domyślna skórka dla RoundCube Webmaila
 Group:		Applications/WWW
+Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-skin
 
 %description skin-default
@@ -105,7 +107,7 @@ Domyślna skórka dla RoundCube Webmaila.
 %if %{with postfixadmin}
 %patch2 -p1
 %endif
-#%patch3 -p1
+%patch3 -p1
 
 find -name .svn | xargs -r rm -rf
 
