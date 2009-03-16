@@ -4,19 +4,19 @@
 # - use pear-deps system?
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
-#
+# - Some php-database backend. Suggests?
 #
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 
-%define		subver	stable
-%define		rel	2
+%define		subver		stable
+%define		rel			2
+%define		rcpfa_ver	1.0.4
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.2
 Release:	0.%{subver}.%{rel}
-%define	rcpfa_ver	1.0.4
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
@@ -40,7 +40,6 @@ Requires:	php(imap)
 Requires:	php(pcre)
 Requires:	php(sockets)
 Requires:	php-pear-DB
-# Some php-database backend. Suggests?
 Requires:	webapps
 Suggests:	php(gd)
 Suggests:	php(iconv)
@@ -156,10 +155,13 @@ cp -a skins/* $RPM_BUILD_ROOT%{_appdir}/skins
 
 # Installer part
 cp -a installer/* $RPM_BUILD_ROOT%{_appdir}/installer
+cp -a config/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php.dist
+cp -a config/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php.dist
+cp -a SQL $RPM_BUILD_ROOT%{_appdir}
 
 ## Configuration:
-install config/db.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
-install config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
+cp -a config/db.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
+cp -a config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
 ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
 ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
@@ -191,7 +193,7 @@ fi
 if [ "$1" = 0 ]; then
 %banner -e %{name} <<'EOF'
 To customize installed languages set
- %%_install_langs in /etc/rpm/macros
+ %%_install_langs in /etc/rpm/macros.lang
 
 EOF
 fi
@@ -216,7 +218,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG INSTALL README UPGRADING SQL
+%doc CHANGELOG INSTALL README UPGRADING
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
@@ -313,6 +315,8 @@ fi
 %{_appdir}/installer/styles.css
 %{_appdir}/installer/welcome.html
 %{_appdir}/installer/images
+%{_appdir}/config/*.php.dist
+%{_appdir}/SQL
 
 %files skin-default
 %defattr(644,root,root,755)
