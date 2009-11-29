@@ -167,6 +167,9 @@ cp -a config/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php.dist
 cp -a config/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php.dist
 cp -a SQL $RPM_BUILD_ROOT%{_appdir}
 
+# Plugins
+cp -a plugins $RPM_BUILD_ROOT%{_appdir}/plugins
+
 ## Configuration:
 cp -a config/db.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
 cp -a config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
@@ -247,6 +250,7 @@ fi
 %{_appdir}/program/steps
 %dir %{_appdir}/program/localization
 %{_appdir}/program/localization/index.inc
+%{_appdir}/plugins
 
 %lang(ar_SA) %{_appdir}/program/localization/ar_SA
 %lang(ast) %{_appdir}/program/localization/ast
