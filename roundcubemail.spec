@@ -5,6 +5,15 @@
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
+# - warning: Installed (but unpackaged) file(s) found:
+#   /usr/share/roundcube/program/localization/br/labels.inc
+#   /usr/share/roundcube/program/localization/br/messages.inc
+#   /usr/share/roundcube/program/localization/fa_AF/labels.inc
+#   /usr/share/roundcube/program/localization/fa_AF/messages.inc
+#   /usr/share/roundcube/program/localization/mr_IN/labels.inc
+#   /usr/share/roundcube/program/localization/mr_IN/messages.inc
+#   /usr/share/roundcube/program/localization/ps/labels.inc
+#   /usr/share/roundcube/program/localization/ps/messages.inc
 #
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
@@ -13,12 +22,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.2.2
+Version:	0.3.1
 Release:	1
 License:	GPL v2
 Group:		Applications/WWW
 Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	992bd125a5f3c91e81f1eebbdef63575
+# Source0-md5:	34e8e18772e7eada8769b6c5c20f7c8e
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
