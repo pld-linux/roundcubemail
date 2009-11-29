@@ -1,27 +1,25 @@
---- roundcubemail-0.2.1/index.php~	2009-03-16 20:19:56.519373134 +0200
-+++ roundcubemail-0.2.1/index.php	2009-03-16 20:19:47.749882178 +0200
-@@ -122,9 +118,12 @@
+--- roundcubemail-0.3.1/index.php.orig	2009-10-31 14:20:02.000000000 +0100
++++ roundcubemail-0.3.1/index.php	2009-11-29 18:12:59.000000000 +0100
+@@ -144,6 +144,11 @@
      $OUTPUT->show_message('sessionerror', 'error');
      $RCMAIL->kill_session();
    }
 +} 
++
 +// faq page
 +else if ($RCMAIL->task=='faq') {
-+	$OUTPUT->send($RCMAIL->task);
++       $OUTPUT->send($RCMAIL->task);
  }
  
--
- // check client X-header to verify request origin
- if ($OUTPUT->ajax_call) {
-   if (!$RCMAIL->config->get('devel_mode') && !rc_request_header('X-RoundCube-Referer')) {
---- roundcubemail-0.2.1/program/include/rcmail.php~	2009-03-16 20:19:56.536247276 +0200
-+++ roundcubemail-0.2.1/program/include/rcmail.php	2009-03-16 19:57:08.976371859 +0200
+ // don't check for valid request tokens in these actions
+--- roundcubemail-0.3.1/program/include/rcmail.php.orig	2009-09-25 09:25:41.000000000 +0200
++++ roundcubemail-0.3.1/program/include/rcmail.php	2009-11-29 18:14:51.000000000 +0100
 @@ -28,7 +28,7 @@
   */
  class rcmail
  {
--  static public $main_tasks = array('mail','settings','addressbook','login','logout');
-+  static public $main_tasks = array('mail','settings','addressbook','faq','login','logout');
+-  static public $main_tasks = array('mail','settings','addressbook','login','logout','dummy');
++  static public $main_tasks = array('mail','settings','addressbook','faq','login','logout','dummy');
    
    static private $instance;
    
