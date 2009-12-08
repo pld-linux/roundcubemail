@@ -5,15 +5,6 @@
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
-# - warning: Installed (but unpackaged) file(s) found:
-#   /usr/share/roundcube/program/localization/br/labels.inc
-#   /usr/share/roundcube/program/localization/br/messages.inc
-#   /usr/share/roundcube/program/localization/fa_AF/labels.inc
-#   /usr/share/roundcube/program/localization/fa_AF/messages.inc
-#   /usr/share/roundcube/program/localization/mr_IN/labels.inc
-#   /usr/share/roundcube/program/localization/mr_IN/messages.inc
-#   /usr/share/roundcube/program/localization/ps/labels.inc
-#   /usr/share/roundcube/program/localization/ps/messages.inc
 #
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
@@ -257,6 +248,7 @@ fi
 %lang(az) %{_appdir}/program/localization/az_AZ
 %lang(bg) %{_appdir}/program/localization/bg_BG
 %lang(bn_BD) %{_appdir}/program/localization/bn_BD
+%lang(br) %{_appdir}/program/localization/br
 %lang(bs) %{_appdir}/program/localization/bs_BA
 %lang(ca) %{_appdir}/program/localization/ca_ES
 %lang(cs) %{_appdir}/program/localization/cs_CZ
@@ -273,6 +265,7 @@ fi
 %lang(et) %{_appdir}/program/localization/et_EE
 %lang(eu) %{_appdir}/program/localization/eu_ES
 %lang(fa) %{_appdir}/program/localization/fa
+%lang(fa_AF) %{_appdir}/program/localization/fa_AF
 %lang(fi) %{_appdir}/program/localization/fi_FI
 %lang(fr) %{_appdir}/program/localization/fr_FR
 %lang(ga) %{_appdir}/program/localization/ga_IE
@@ -292,6 +285,7 @@ fi
 %lang(lt) %{_appdir}/program/localization/lt_LT
 %lang(lv) %{_appdir}/program/localization/lv_LV
 %lang(mk) %{_appdir}/program/localization/mk_MK
+%lang(mr) %{_appdir}/program/localization/mr_IN
 %lang(ms) %{_appdir}/program/localization/ms_MY
 %lang(nb) %{_appdir}/program/localization/nb_NO
 %lang(ne) %{_appdir}/program/localization/ne_NP
@@ -299,6 +293,7 @@ fi
 %lang(nl_BE) %{_appdir}/program/localization/nl_BE
 %lang(nn) %{_appdir}/program/localization/nn_NO
 %lang(pl) %{_appdir}/program/localization/pl_PL
+%lang(ps) %{_appdir}/program/localization/ps
 %lang(pt) %{_appdir}/program/localization/pt_PT
 %lang(pt_BR) %{_appdir}/program/localization/pt_BR
 %lang(ro) %{_appdir}/program/localization/ro_RO
