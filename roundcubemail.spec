@@ -44,6 +44,7 @@ Requires:	php-pear-DB
 Requires:	webapps
 Suggests:	php(gd)
 Suggests:	php(iconv)
+Suggests:	php(mbstring)
 Suggests:	php(mcrypt)
 Suggests:	php(openssl)
 Suggests:	php-pecl-fileinfo
