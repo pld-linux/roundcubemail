@@ -35,7 +35,10 @@ Requires:	%{name}-skin
 Requires:	php(dom)
 Requires:	php(imap)
 Requires:	php(pcre)
+Requires:	php(session)
 Requires:	php(sockets)
+Requires:	php(spl)
+Requires:	php(xml)
 Requires:	rpm-whiteout >= 1.22
 Requires:	php-pear-DB
 Requires:	webapps
