@@ -195,15 +195,6 @@ if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
 	fi
 fi
 
-%post
-if [ "$1" = 0 ]; then
-%banner -e %{name} <<'EOF'
-To customize installed languages set
- %%_install_langs in /etc/rpm/macros.lang
-
-EOF
-fi
-
 %triggerin -- apache1 < 1.3.37-3, apache1-base
 %webapp_register apache %{_webapp}
 
