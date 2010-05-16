@@ -5,9 +5,11 @@
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
+# - test/finish and then enable by default password-anon-ldap-bind patch
 #
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
+%bcond_with	password-anon-ldap-bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
 Summary:	RoundCube Webmail
@@ -28,6 +30,7 @@ Patch0:		%{name}-config.patch
 Patch1:		%{name}-spam.patch
 Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
+Patch4:		%{name}-password-anon-ldap-bind.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -115,6 +118,9 @@ Domyślna skórka dla RoundCube Webmaila.
 #patch2 -p1
 %endif
 %patch3 -p1
+%if %{with password-anon-ldap-bind}
+%patch4 -p1
+%endif
 
 find -name .svn | xargs -r rm -rf
 
