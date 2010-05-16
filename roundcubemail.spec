@@ -48,12 +48,12 @@ Requires:	webapps
 Requires:	webserver(alias)
 Requires:	webserver(indexfile)
 Requires:	webserver(php)
-Suggests:	pear(Net/LDAP2.php)
 Suggests:	php(gd)
 Suggests:	php(iconv)
 Suggests:	php(mbstring)
 Suggests:	php(mcrypt)
 Suggests:	php(openssl)
+Suggests:	php-pear-Net_LDAP2
 Suggests:	php-pecl-fileinfo
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
