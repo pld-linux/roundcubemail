@@ -9,7 +9,7 @@
 #
 %bcond_with	spamfilter	# Build with spamfilter patch
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
-%bcond_with	password-anon-ldap-bind	# apply with password-anon-ldap-bind patch.
+%bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
 Summary:	RoundCube Webmail
@@ -118,7 +118,7 @@ Domyślna skórka dla RoundCube Webmaila.
 #patch2 -p1
 %endif
 %patch3 -p1
-%if %{with password-anon-ldap-bind}
+%if %{with password_anon_ldap_bind}
 %patch4 -p1
 %endif
 
