@@ -46,6 +46,7 @@ Requires:	php-pear-DB
 Requires:	rpm-whiteout >= 1.22
 Requires:	webapps
 Requires:	webserver(alias)
+Requires:	webserver(indexfile)
 Requires:	webserver(php)
 Suggests:	php(gd)
 Suggests:	php(iconv)
