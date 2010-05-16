@@ -17,7 +17,7 @@ Version:	0.3.1
 Release:	1
 License:	GPL v2
 Group:		Applications/WWW
-Source0:	http://dl.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
 # Source0-md5:	34e8e18772e7eada8769b6c5c20f7c8e
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
@@ -39,11 +39,14 @@ Requires:	php(session)
 Requires:	php(sockets)
 Requires:	php(spl)
 Requires:	php(xml)
-Requires:	rpm-whiteout >= 1.22
 Requires:	php-pear-DB
+Requires:	rpm-whiteout >= 1.22
 Requires:	webapps
+Requires:	webserver(alias)
+Requires:	webserver(php)
 Suggests:	php(gd)
 Suggests:	php(iconv)
+Suggests:	php(ldap)
 Suggests:	php(mbstring)
 Suggests:	php(mcrypt)
 Suggests:	php(openssl)
