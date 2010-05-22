@@ -18,7 +18,7 @@ Name:		roundcubemail
 Version:	0.3.1
 Release:	2
 License:	GPL v2
-Group:		Applications/WWW
+Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
 # Source0-md5:	34e8e18772e7eada8769b6c5c20f7c8e
 Source1:	%{name}.config
