@@ -193,15 +193,17 @@ rm -rf $RPM_BUILD_ROOT
 if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
 	# import configs from previously manually installed site
 	d=/home/services/httpd/html/config
-	echo >&2 "Importing site configs from $d"
-	mkdir -p %{_sysconfdir}
-	if [ -f $d/db.inc.php ]; then
-		[ -f %{_sysconfdir}/db.inc.php ] && mv -f %{_sysconfdir}/db.inc.php{,.rpmorig}
-		cp -af $d/db.inc.php %{_sysconfdir}/db.inc.php
-	fi
-	if [ -f $d/main.inc.php ]; then
-		[ -f %{_sysconfdir}/main.inc.php ] && mv -f %{_sysconfdir}/main.inc.php{,.rpmorig}
-		cp -af $d/main.inc.php %{_sysconfdir}/main.inc.php
+	if [ -f $d/db.inc.php -o -f $d/main.inc.php ]; then
+		echo >&2 "Importing site configs from $d"
+		mkdir -p %{_sysconfdir}
+		if [ -f $d/db.inc.php ]; then
+			[ -f %{_sysconfdir}/db.inc.php ] && mv -f %{_sysconfdir}/db.inc.php{,.rpmorig}
+			cp -af $d/db.inc.php %{_sysconfdir}/db.inc.php
+		fi
+		if [ -f $d/main.inc.php ]; then
+			[ -f %{_sysconfdir}/main.inc.php ] && mv -f %{_sysconfdir}/main.inc.php{,.rpmorig}
+			cp -af $d/main.inc.php %{_sysconfdir}/main.inc.php
+		fi
 	fi
 fi
 
