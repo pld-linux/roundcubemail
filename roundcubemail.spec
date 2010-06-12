@@ -48,13 +48,13 @@ Requires:	webapps
 Requires:	webserver(alias)
 Requires:	webserver(indexfile)
 Requires:	webserver(php)
+Suggests:	php(fileinfo)
 Suggests:	php(gd)
 Suggests:	php(iconv)
 Suggests:	php(mbstring)
 Suggests:	php(mcrypt)
 Suggests:	php(openssl)
 Suggests:	php-pear-Net_LDAP2
-Suggests:	php-pecl-fileinfo
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
