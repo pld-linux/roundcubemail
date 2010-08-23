@@ -12,17 +12,17 @@
  }
  
  // don't check for valid request tokens in these actions
---- roundcubemail-0.3.1/program/include/rcmail.php.orig	2009-09-25 09:25:41.000000000 +0200
-+++ roundcubemail-0.3.1/program/include/rcmail.php	2009-11-29 18:14:51.000000000 +0100
+--- roundcubemail-0.4/program/include/rcmail.php~	2010-08-06 17:59:34.000000000 +0300
++++ roundcubemail-0.4/program/include/rcmail.php	2010-08-23 13:33:22.411426529 +0300
 @@ -28,7 +28,7 @@
   */
  class rcmail
  {
--  static public $main_tasks = array('mail','settings','addressbook','login','logout','dummy');
-+  static public $main_tasks = array('mail','settings','addressbook','faq','login','logout','dummy');
-   
+-  static public $main_tasks = array('mail','settings','addressbook','login','logout','utils','dummy');
++  static public $main_tasks = array('mail','settings','addressbook','faq','login','logout','utils','dummy');
+ 
    static private $instance;
-   
+ 
 --- /dev/null	2008-11-04 20:33:38.146691408 +0200
 +++ roundcubemail-0.2.1/skins/default/templates/faq.html	2009-01-21 09:22:58.000000000 +0200
 @@ -0,0 +1,16 @@

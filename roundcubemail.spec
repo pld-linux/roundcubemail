@@ -15,12 +15,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.3.1
-Release:	2
+Version:	0.4
+Release:	1
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	34e8e18772e7eada8769b6c5c20f7c8e
+# Source0-md5:	6e5d2313087ce1e1209eb0f4fd71beab
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
@@ -32,7 +32,7 @@ Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
 URL:		http://www.roundcube.net/
-BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	rpmbuild(macros) >= 1.553
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
 Requires:	php(dom)
@@ -126,7 +126,13 @@ Domyślna skórka dla RoundCube Webmaila.
 find -name .svn | xargs -r rm -rf
 
 # undos the source
-find '(' -name '*.php' -o -name '*.inc' -o -name '*.js' -o -name '*.css' ')' -print0 | xargs -0 sed -i -e 's,\r$,,'
+%undos -f php,inc,js,css
+
+# kill extensions and fill proper shebang
+%{__sed} -i -e '1s,^#!.*php,#!%{__php},' bin/*.sh
+for a in bin/*.sh; do
+	mv $a ${a%.sh}
+done
 
 mv config/db.inc.php.dist config/db.inc.php
 mv config/main.inc.php.dist config/main.inc.php
@@ -160,7 +166,7 @@ install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sys
 
 # Main application part:
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
-cp -a bin/*.php $RPM_BUILD_ROOT%{_appdir}/bin
+cp -a bin/* $RPM_BUILD_ROOT%{_appdir}/bin
 cp -a index.php $RPM_BUILD_ROOT%{_appdir}
 
 # Skins installation
@@ -237,7 +243,7 @@ fi
 %dir %{_appdir}
 %{_appdir}/*.php
 %dir %{_appdir}/bin
-%{_appdir}/bin/*.php
+%attr(755,root,root) %{_appdir}/bin/*
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
 %dir %{_appdir}/program
@@ -311,6 +317,7 @@ fi
 %lang(sq) %{_appdir}/program/localization/sq_AL
 %lang(sr) %{_appdir}/program/localization/sr_CS
 %lang(sv) %{_appdir}/program/localization/sv_SE
+%lang(ta_IN) %{_appdir}/program/localization/ta_IN
 %lang(th) %{_appdir}/program/localization/th_TH
 %lang(tr) %{_appdir}/program/localization/tr_TR
 %lang(uk) %{_appdir}/program/localization/uk_UA
