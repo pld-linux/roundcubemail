@@ -16,7 +16,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.4
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -212,6 +212,13 @@ if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
 		fi
 	fi
 fi
+
+# Note this on version upgrade
+%triggerpostun -- %{name} < %{version}
+%banner -e %{name} <<-EOF
+Run %{_appdir}/bin/update to update to version %{version}.
+See %{_docdir}/%{name}-%{version}/UPGRADING* for more information.
+EOF
 
 %triggerin -- apache1 < 1.3.37-3, apache1-base
 %webapp_register apache %{_webapp}
