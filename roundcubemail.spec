@@ -1,6 +1,5 @@
 # TODO:
-# - it has PEAR boundled inside - use system ones
-# - use pear-deps system?
+# - move bin/* to -setup which are related to upgrading/setup
 # - use system js/tiny_mce
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
@@ -18,7 +17,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.4
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -42,7 +41,6 @@ Requires:	php-common >= 4:%{php_min_version}
 Requires:	php-date
 Requires:	php-dom
 Requires:	php-imap
-Requires:	php-json
 Requires:	php-pcre
 Requires:	php-pear-DB
 Requires:	php-session
@@ -55,13 +53,18 @@ Requires:	webapps
 Requires:	webserver(alias)
 Requires:	webserver(indexfile)
 Requires:	webserver(php)
-Suggests:	php-fileinfo
+Suggests:	php(fileinfo)
 Suggests:	php-gd
 Suggests:	php-iconv
+Suggests:	php-json
 Suggests:	php-mbstring
 Suggests:	php-mcrypt
 Suggests:	php-openssl
+Suggests:	php-pear-Auth_SASL
 Suggests:	php-pear-Net_LDAP2
+Suggests:	php-pear-Net_Sieve
+Suggests:	php-pear-Net_Socket
+Suggests:	php-xml
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -78,7 +81,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_noautopear	pear
 
 # exclude optional php dependencies
-%define		_noautophp	php-sqlite php-mysql php-mysqli php-pgsql php-hash
+%define		_noautophp	php-sqlite php-mysql php-mysqli php-pgsql php-hash php-json php-xml
 
 # put it together for rpmbuild
 %define		_noautoreq	%{?_noautophp} %{?_noautopear}
@@ -149,6 +152,36 @@ find -name .svn | xargs -r rm -rf
 for a in bin/*.sh; do
 	mv $a ${a%.sh}
 done
+
+# php-pear-PEAR-core 1.9.0 (used indirectly)
+rm program/lib/PEAR.php
+rm program/lib/PEAR5.php
+
+# php-pear-Net_Socket 1.0.9 (used by password, managesieve plugins)
+rm program/lib/Net/Socket.php
+
+# php-pear-Net_SMTP 1.4.2 (nothing seem to use it)
+rm program/lib/Net/SMTP.php
+
+# php-pear-Auth_SASL 1.0.4 (used by managesieve)
+rm program/lib/Auth/SASL.php
+rm -r program/lib/Auth/SASL
+
+# php-pear-Mail_Mime 1.8.0 (nothing seems to use it)
+rm program/lib/Mail/mime.php
+rm program/lib/Mail/mimePart.php
+
+# php-pear-Net_Sieve 1.3.0
+rm plugins/managesieve/lib/Net/Sieve.php
+
+# now empty dirs
+rmdir program/lib/Auth
+rmdir program/lib/Mail
+rmdir program/lib/Net
+rmdir plugins/managesieve/lib/Net
+
+# unknown MDB2 version (newer than released 2.5.0b2, or modified by rc)
+#rm program/lib/MDB2.php
 
 mv config/db.inc.php.dist config/db.inc.php
 mv config/main.inc.php.dist config/main.inc.php
@@ -233,6 +266,8 @@ fi
 %triggerpostun -- %{name} < %{version}
 %banner -e %{name} <<-EOF
 Run %{_appdir}/bin/update to update to version %{version}.
+(Be sure to have %{name}-setup installed when you run it)
+
 See %{_docdir}/%{name}-%{version}/UPGRADING* for more information.
 EOF
 
