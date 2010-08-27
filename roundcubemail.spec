@@ -1,5 +1,4 @@
 # TODO:
-# - prepare config for lighttpd
 # - it has PEAR boundled inside - use system ones
 # - use pear-deps system?
 # - use system js/tiny_mce
@@ -12,6 +11,9 @@
 %bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
+%define		php_min_version 5.2.3
+
+%include	/usr/lib/rpm/macros.php
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
@@ -32,28 +34,33 @@ Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
 URL:		http://www.roundcube.net/
+BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.553
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
-Requires:	php(dom)
-Requires:	php(imap)
-Requires:	php(pcre)
-Requires:	php(session)
-Requires:	php(sockets)
-Requires:	php(spl)
-Requires:	php(xml)
+Requires:	php-common >= 4:%{php_min_version}
+Requires:	php-date
+Requires:	php-dom
+Requires:	php-imap
+Requires:	php-json
+Requires:	php-pcre
 Requires:	php-pear-DB
+Requires:	php-session
+Requires:	php-simplexml
+Requires:	php-sockets
+Requires:	php-spl
+Requires:	php-xml
 Requires:	rpm-whiteout >= 1.22
 Requires:	webapps
 Requires:	webserver(alias)
 Requires:	webserver(indexfile)
 Requires:	webserver(php)
-Suggests:	php(fileinfo)
-Suggests:	php(gd)
-Suggests:	php(iconv)
-Suggests:	php(mbstring)
-Suggests:	php(mcrypt)
-Suggests:	php(openssl)
+Suggests:	php-fileinfo
+Suggests:	php-gd
+Suggests:	php-iconv
+Suggests:	php-mbstring
+Suggests:	php-mcrypt
+Suggests:	php-openssl
 Suggests:	php-pear-Net_LDAP2
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
@@ -66,6 +73,15 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_appdatadir	/var/lib/roundcube
 %define		_applogdir	/var/log/roundcube
 %define		_archivelogdir	/var/log/archive/roundcube
+
+# bad depsolver
+%define		_noautopear	pear
+
+# exclude optional php dependencies
+%define		_noautophp	php-sqlite php-mysql php-mysqli php-pgsql php-hash
+
+# put it together for rpmbuild
+%define		_noautoreq	%{?_noautophp} %{?_noautopear}
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client with an
@@ -187,10 +203,10 @@ cp -a config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
 ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
 ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-install %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
+cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
