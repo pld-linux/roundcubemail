@@ -30,7 +30,7 @@ http://trac.roundcube.net/ticket/1403507
 -            $a_folders = $this->conn->listSubscribed($this->mod_mailbox($root), $filter);
 +            $a_folders = array();
 +            foreach ($this->options['allroots'] as $thisroot) {
-+                $a_folders = array_merge($a_folders, $this->conn->listSubscribed($this->mod_mailbox($root), $filter));
++                $a_folders = array_merge($a_folders, $this->conn->listSubscribed($this->mod_mailbox($thisroot), $filter));
 +            }
          }
  
@@ -44,7 +44,7 @@ http://trac.roundcube.net/ticket/1403507
 +            $a_mboxes = array();
 +            // retrieve list of folders from IMAP server
 +            foreach ($this->options['allroots'] as $thisroot) {
-+                $a_mboxes = array_merge($a_mboxes, $this->conn->listMailboxes($this->mod_mailbox($root), $filter));
++                $a_mboxes = array_merge($a_mboxes, $this->conn->listMailboxes($this->mod_mailbox($thisroot), $filter));
 +            }
          }
  
