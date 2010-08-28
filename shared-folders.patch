@@ -1,82 +1,80 @@
-diff -r -u ../roundcubemail-0.3.1/program/include/rcmail.php program/include/rcmail.php
---- ../roundcubemail-0.3.1/program/include/rcmail.php	2009-09-25 08:25:41.000000000 +0100
-+++ program/include/rcmail.php	2010-03-31 15:21:49.000000000 +0100
-@@ -382,6 +382,7 @@
+http://trac.roundcube.net/ticket/1403507
+
+--- roundcubemail-0.4/program/include/rcmail.php~	2010-08-28 18:22:37.000000000 +0300
++++ roundcubemail-0.4/program/include/rcmail.php	2010-08-28 18:23:09.634917193 +0300
+@@ -430,6 +430,7 @@
        'auth_method' => $this->config->get('imap_auth_type', 'check'),
-       'delimiter' => isset($_SESSION['imap_delimiter']) ? $_SESSION['imap_delimiter'] : $this->config->get('imap_delimiter'),
-       'rootdir' => isset($_SESSION['imap_root']) ? $_SESSION['imap_root'] : $this->config->get('imap_root'),
+       'delimiter'   => isset($_SESSION['imap_delimiter']) ? $_SESSION['imap_delimiter'] : $this->config->get('imap_delimiter'),
+       'rootdir'     => isset($_SESSION['imap_root']) ? $_SESSION['imap_root'] : $this->config->get('imap_root'),
 +      'allroots' => $this->config->get('imap_root'),
-       'debug_mode' => (bool) $this->config->get('imap_debug', 0),
-     );
+       'debug_mode'  => (bool) $this->config->get('imap_debug', 0),
+       'force_caps'  => (bool) $this->config->get('imap_force_caps'),
+       'timeout'     => (int) $this->config->get('imap_timeout', 0),
+--- roundcubemail-0.4/program/include/rcube_imap.php~	2010-08-28 18:22:37.000000000 +0300
++++ roundcubemail-0.4/program/include/rcube_imap.php	2010-08-28 18:28:45.038336443 +0300
+@@ -202,6 +202,9 @@
+         $this->root_dir = $root;
+         $this->options['rootdir'] = $root;
  
-diff -r -u ../roundcubemail-0.3.1/program/include/rcube_imap.php program/include/rcube_imap.php
---- ../roundcubemail-0.3.1/program/include/rcube_imap.php	2009-10-19 08:47:10.000000000 +0100
-+++ program/include/rcube_imap.php	2010-03-31 21:40:44.000000000 +0100
-@@ -210,6 +210,9 @@
- 
-     $this->root_dir = $root;
-     $this->options['rootdir'] = $root;
++        if (empty($this->options['allroots']))
++            $this->options['allroots'] = array($root);
 +
-+    if (empty($this->options['allroots']))
-+      $this->options['allroots'] = array($root);
-     
-     if (empty($this->delimiter))
-       $this->get_hierarchy_delimiter();
-@@ -446,10 +449,11 @@
-         $a_folders = $data['folders'];
+         if (empty($this->delimiter))
+             $this->get_hierarchy_delimiter();
      }
-     else{
--        // retrieve list of folders from IMAP server
--        $a_folders = iil_C_ListSubscribed($this->conn, $this->mod_mailbox($root), $filter);
-+        $a_folders = array();
-+	foreach ($this->options['allroots'] as $thisroot) {
-+	    $a_folders = array_merge($a_folders, iil_C_ListSubscribed($this->conn, $this->mod_mailbox($thisroot), $filter));
-+	}
-     }
--
-     
-     if (!is_array($a_folders) || !sizeof($a_folders))
-       $a_folders = array();
-@@ -1905,8 +1909,12 @@
-       return $sa_unsubscribed;
-       
-     // retrieve list of folders from IMAP server
--    $a_mboxes = iil_C_ListMailboxes($this->conn, $this->mod_mailbox($root), '*');
--
-+    $a_mboxes = array();
-+    
-+    // retrieve list of folders from IMAP server
-+    foreach ($this->options['allroots'] as $thisroot) {
-+       $a_mboxes = array_merge($a_mboxes, iil_C_ListMailboxes($this->conn, $this->mod_mailbox($thisroot), '*'));
-+    }
-     // modify names with root dir
-     foreach ($a_mboxes as $mbox_name)
-       {
-@@ -2863,13 +2871,23 @@
-    */
-   function mod_mailbox($mbox_name, $mode='in')
+@@ -2628,8 +2631,10 @@
+             $a_folders = $data['folders'];
+         }
+         else {
+-            // retrieve list of folders from IMAP server
+-            $a_folders = $this->conn->listSubscribed($this->mod_mailbox($root), $filter);
++            $a_folders = array();
++            foreach ($this->options['allroots'] as $thisroot) {
++                $a_folders = array_merge($a_folders, $this->conn->listSubscribed($this->mod_mailbox($root), $filter));
++            }
+         }
+ 
+         if (!is_array($a_folders) || !sizeof($a_folders))
+@@ -2659,8 +2664,11 @@
+             $a_mboxes = $data['folders'];
+         }
+         else {
+-            // retrieve list of folders from IMAP server
+-            $a_mboxes = $this->conn->listMailboxes($this->mod_mailbox($root), $filter);
++            $a_mboxes = array();
++            // retrieve list of folders from IMAP server
++            foreach ($this->options['allroots'] as $thisroot) {
++                $a_mboxes = array_merge($a_mboxes, $this->conn->listMailboxes($this->mod_mailbox($root), $filter));
++            }
+         }
+ 
+         $a_folders = array();
+--- roundcubemail-0.4/program/include/rcube_imap.php~	2010-08-28 18:39:36.000000000 +0300
++++ roundcubemail-0.4/program/include/rcube_imap.php	2010-08-28 18:43:48.524792280 +0300
+@@ -2926,14 +2926,21 @@
+      */
+     function mod_mailbox($mbox_name, $mode='in')
      {
--    if ((!empty($this->root_ns) && $this->root_ns == $mbox_name) || $mbox_name == 'INBOX')
-+    if ((!empty($this->root_ns) && $this->root_ns == $mbox_name)) 
-       return $mbox_name;
+-        if ($mbox_name == 'INBOX')
+-            return $mbox_name;
++        foreach ($this->options['allroots'] as $thisroot) {
++            if ($thisroot == $mbox_name) return $mbox_name;
++        }
  
--    if (!empty($this->root_dir) && $mode=='in') 
-+    foreach($this->options['allroots'] as $thisroot) {
-+      if ($thisroot == $mbox_name) return $mbox_name;
-+    }
-+
-+    if (!empty($this->root_dir) && $mode=='in') {
-+      foreach($this->options['allroots'] as $thisroot) {
-+        if (substr($mbox_name, 0, strlen($thisroot)) == $thisroot) return $mbox_name;
-+      }
-       $mbox_name = $this->root_dir.$this->delimiter.$mbox_name;
--    else if (strlen($this->root_dir) && $mode=='out') 
--      $mbox_name = substr($mbox_name, strlen($this->root_dir)+1);
-+    } else if (strlen($this->root_dir) && $mode=='out') {
-+      if (substr($mbox_name, 0, strlen($this->root_dir)) == $this->root_dir) {
-+     	 $mbox_name = substr($mbox_name, strlen($this->root_dir)+1);
-+      }
-+    }
+         if (!empty($this->root_dir)) {
+-            if ($mode=='in')
++            if ($mode=='in') {
++                foreach ($this->options['allroots'] as $thisroot) {
++                    if (substr($mbox_name, 0, strlen($thisroot)) == $thisroot) return $mbox_name;
++                }
+                 $mbox_name = $this->root_dir.$this->delimiter.$mbox_name;
+-            else if (!empty($mbox_name)) // $mode=='out'
+-                $mbox_name = substr($mbox_name, strlen($this->root_dir)+1);
++            } else if (!empty($mbox_name)) { // $mode=='out'
++                if (substr($mbox_name, 0, strlen($this->root_dir)) == $this->root_dir) {
++                    $mbox_name = substr($mbox_name, strlen($this->root_dir)+1);
++                }
++            }
+         }
  
-     return $mbox_name;
-     }
+         return $mbox_name;
