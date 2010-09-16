@@ -1,6 +1,9 @@
 # TODO:
 # - move bin/* to -setup which are related to upgrading/setup
 # - use system js/tiny_mce
+# - use system js/jquery
+# - use system magic db: program/lib/magic
+# - script to %lang all "localization" dirs
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
 # - test/finish and then enable by default password-anon-ldap-bind patch
@@ -32,6 +35,7 @@ Patch1:		%{name}-spam.patch
 Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
+Patch5:		use-iconv.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.553
@@ -40,6 +44,7 @@ Requires:	%{name}-skin
 Requires:	php-common >= 4:%{php_min_version}
 Requires:	php-date
 Requires:	php-dom
+Requires:	php-iconv
 Requires:	php-imap
 Requires:	php-pcre
 Requires:	php-pear-DB
@@ -55,7 +60,6 @@ Requires:	webserver(indexfile)
 Requires:	webserver(php)
 Suggests:	php(fileinfo)
 Suggests:	php-gd
-Suggests:	php-iconv
 Suggests:	php-json
 Suggests:	php-mbstring
 Suggests:	php-mcrypt
@@ -141,6 +145,7 @@ Domyślna skórka dla RoundCube Webmaila.
 %if %{with password_anon_ldap_bind}
 %patch4 -p1
 %endif
+%patch5 -p1
 
 find -name .svn | xargs -r rm -rf
 
@@ -155,6 +160,10 @@ done
 
 # unpacked js sources
 find -name '*.src' | xargs rm -v
+
+# rm utf8.class and deps, we use iconv extension
+rm program/lib/utf8.class.php
+rm -r program/lib/encoding
 
 # php-pear-PEAR-core 1.9.0 (used indirectly)
 rm program/lib/PEAR.php
