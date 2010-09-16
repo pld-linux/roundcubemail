@@ -153,6 +153,9 @@ for a in bin/*.sh; do
 	mv $a ${a%.sh}
 done
 
+# unpacked js sources
+find -name '*.src' | xargs rm -v
+
 # php-pear-PEAR-core 1.9.0 (used indirectly)
 rm program/lib/PEAR.php
 rm program/lib/PEAR5.php
