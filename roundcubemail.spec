@@ -48,6 +48,8 @@ Requires:	php-iconv
 Requires:	php-imap
 Requires:	php-pcre
 Requires:	php-pear-DB
+Requires:	php-pear-Mail_Mime
+Requires:	php-pear-Net_SMTP
 Requires:	php-session
 Requires:	php-simplexml
 Requires:	php-sockets
