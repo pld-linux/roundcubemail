@@ -1,5 +1,0 @@
-/var/log/roundcube/* {
-	olddir /var/log/archive/roundcube
-	create 660 http logs
-	monthly
-}
