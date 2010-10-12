@@ -20,7 +20,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.4.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -37,7 +37,8 @@ Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
 Patch5:		use-iconv.patch
-Patch6:		shared-folders.patch
+# Disabled. Because of this patch roundcube does not show folders other than INBOX.
+# Patch6:		shared-folders.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.553
@@ -152,7 +153,9 @@ Domyślna skórka dla RoundCube Webmaila.
 %patch4 -p1
 %endif
 %patch5 -p1
-%patch6 -p1
+
+# Disabled. Because of this patch roundcube does not show folders other than INBOX.
+#%%patch6 -p1
 
 find -name .svn | xargs -r rm -rf
 
