@@ -39,8 +39,6 @@ Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
 Patch5:		use-iconv.patch
-# Disabled. Because of this patch roundcube does not show folders other than INBOX.
-# Patch6:		shared-folders.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpmbuild(macros) >= 1.553
@@ -54,9 +52,9 @@ Requires:	php-imap
 Requires:	php-pcre
 Requires:	php-pear-DB
 Requires:	php-pear-Mail_Mime
+Requires:	php-pear-Net_IDNA2 >= 0.1.1
 Requires:	php-pear-Net_SMTP
 Requires:	php-session
-Requires:	php-pear-Net_IDNA2 >= 0.1.1
 Requires:	php-simplexml
 Requires:	php-sockets
 Requires:	php-spl
@@ -156,9 +154,6 @@ Domyślna skórka dla RoundCube Webmaila.
 %patch4 -p1
 %endif
 %patch5 -p1
-
-# Disabled. Because of this patch roundcube does not show folders other than INBOX.
-#%%patch6 -p1
 
 find -name .svn | xargs -r rm -rf
 
