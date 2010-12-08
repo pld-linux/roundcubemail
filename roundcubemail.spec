@@ -1,9 +1,10 @@
 # TODO:
+# - use gpl-dependant tarball, instead of full tarball and removing all bundled libs again?
+#   see: http://www.roundcubeforum.net/3-news-announcements/32-news-announcements/6601-roundcube-news-new-version-0-4-beta-released.html
 # - move bin/* to -setup which are related to upgrading/setup
 # - use system js/tiny_mce
 # - use system js/jquery
 # - use system magic db: program/lib/magic
-# - script to %lang all "localization" dirs
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
 # - test/finish and then enable by default password-anon-ldap-bind patch
@@ -16,7 +17,6 @@
 
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
-
 %include	/usr/lib/rpm/macros.php
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
