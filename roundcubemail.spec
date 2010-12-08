@@ -56,6 +56,7 @@ Requires:	php-pear-DB
 Requires:	php-pear-Mail_Mime
 Requires:	php-pear-Net_SMTP
 Requires:	php-session
+Requires:	php-pear-Net_IDNA2 >= 0.1.1
 Requires:	php-simplexml
 Requires:	php-sockets
 Requires:	php-spl
@@ -198,13 +199,14 @@ rm program/lib/Mail/mimePart.php
 # php-pear-Net_Sieve 1.3.0
 rm plugins/managesieve/lib/Net/Sieve.php
 
-# TODO: This new as of 0.5 beta, find pear package?
-# rm program/lib/Net/IDNA/IDNA.php
+# 0.1.1 snapshot (at least r301175)
+rm program/lib/Net/IDNA2.php
+rm -r program/lib/Net/IDNA2
 
 # now empty dirs
 rmdir program/lib/Auth
 rmdir program/lib/Mail
-#rmdir program/lib/Net
+rmdir program/lib/Net
 rmdir plugins/managesieve/lib/Net
 
 # unknown MDB2 version (newer than released 2.5.0b2, or modified by rc)
