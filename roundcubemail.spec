@@ -12,6 +12,8 @@
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 %bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
+%define _beta	beta
+
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
 
@@ -19,12 +21,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.4.2
-Release:	2
+Version:	0.5
+Release:	0.%{_beta}.1
 License:	GPL v2
 Group:		Applications/Mail
-Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	d28417f0f16ff2a251a964be153c967a
+Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-%{_beta}.tar.gz
+# Source0-md5:	5653f8ee38acee5f1833b2e4d17f2927
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
@@ -140,7 +142,7 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q %{?with_postfixadmin:-a 4}
+%setup -q %{?with_postfixadmin:-a 4} -n %{name}-%{version}-%{_beta}
 %patch0 -p1
 %if %{with spamfilter}
 %patch1 -p1
@@ -148,7 +150,7 @@ Domyślna skórka dla RoundCube Webmaila.
 %if %{with postfixadmin}
 #patch2 -p1
 %endif
-%patch3 -p1
+#%patch3 -p1
 %if %{with password_anon_ldap_bind}
 %patch4 -p1
 %endif
@@ -196,10 +198,13 @@ rm program/lib/Mail/mimePart.php
 # php-pear-Net_Sieve 1.3.0
 rm plugins/managesieve/lib/Net/Sieve.php
 
+# TODO: This new as of 0.5 beta, find pear package?
+# rm program/lib/Net/IDNA/IDNA.php
+
 # now empty dirs
 rmdir program/lib/Auth
 rmdir program/lib/Mail
-rmdir program/lib/Net
+#rmdir program/lib/Net
 rmdir plugins/managesieve/lib/Net
 
 # unknown MDB2 version (newer than released 2.5.0b2, or modified by rc)
