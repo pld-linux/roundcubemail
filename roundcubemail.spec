@@ -13,7 +13,7 @@
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 %bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
-%define		subver	beta
+%define		subver	rc
 
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
@@ -26,7 +26,7 @@ Release:	0.%{subver}.8
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	5653f8ee38acee5f1833b2e4d17f2927
+# Source0-md5:	6fba632d1ee77316d029cdff2c201b03
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
