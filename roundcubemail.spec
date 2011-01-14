@@ -13,8 +13,6 @@
 %bcond_with	postfixadmin	# Build with postfixadmin support patch
 %bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
-%define		subver	rc
-
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
 %include	/usr/lib/rpm/macros.php
@@ -22,11 +20,11 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.5
-Release:	0.%{subver}.8
+Release:	0.1
 License:	GPL v2
 Group:		Applications/Mail
-Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-%{subver}.tar.gz
-# Source0-md5:	6fba632d1ee77316d029cdff2c201b03
+Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
+# Source0-md5:	66111e52784221c56c477adb60cc7f5c
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
@@ -141,7 +139,7 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q %{?with_postfixadmin:-a 4} -n %{name}-%{version}-%{subver}
+%setup -q %{?with_postfixadmin:-a 4}
 %patch0 -p1
 %if %{with spamfilter}
 %patch1 -p1
