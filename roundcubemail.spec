@@ -1,9 +1,10 @@
 # TODO:
+# - use gpl-dependant tarball, instead of full tarball and removing all bundled libs again?
+#   see: http://www.roundcubeforum.net/3-news-announcements/32-news-announcements/6601-roundcube-news-new-version-0-4-beta-released.html
 # - move bin/* to -setup which are related to upgrading/setup
 # - use system js/tiny_mce
 # - use system js/jquery
 # - use system magic db: program/lib/magic
-# - script to %lang all "localization" dirs
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
 # - test/finish and then enable by default password-anon-ldap-bind patch
@@ -14,17 +15,16 @@
 
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
-
 %include	/usr/lib/rpm/macros.php
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.4.2
-Release:	2
+Version:	0.5
+Release:	1
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	d28417f0f16ff2a251a964be153c967a
+# Source0-md5:	66111e52784221c56c477adb60cc7f5c
 Source1:	%{name}.config
 Source2:	%{name}.logrotate
 Source3:	%{name}-lighttpd.conf
@@ -37,11 +37,9 @@ Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
 Patch5:		use-iconv.patch
-# Disabled. Because of this patch roundcube does not show folders other than INBOX.
-# Patch6:		shared-folders.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
-BuildRequires:	rpmbuild(macros) >= 1.553
+BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
 Requires:	php-common >= 4:%{php_min_version}
@@ -52,6 +50,7 @@ Requires:	php-imap
 Requires:	php-pcre
 Requires:	php-pear-DB
 Requires:	php-pear-Mail_Mime
+Requires:	php-pear-Net_IDNA2 >= 0.1.1
 Requires:	php-pear-Net_SMTP
 Requires:	php-session
 Requires:	php-simplexml
@@ -148,14 +147,11 @@ Domyślna skórka dla RoundCube Webmaila.
 %if %{with postfixadmin}
 #patch2 -p1
 %endif
-%patch3 -p1
+#%patch3 -p1
 %if %{with password_anon_ldap_bind}
 %patch4 -p1
 %endif
 %patch5 -p1
-
-# Disabled. Because of this patch roundcube does not show folders other than INBOX.
-#%%patch6 -p1
 
 find -name .svn | xargs -r rm -rf
 
@@ -195,6 +191,10 @@ rm program/lib/Mail/mimePart.php
 
 # php-pear-Net_Sieve 1.3.0
 rm plugins/managesieve/lib/Net/Sieve.php
+
+# 0.1.1 snapshot (at least r301175)
+rm program/lib/Net/IDNA2.php
+rm -r program/lib/Net/IDNA2
 
 # now empty dirs
 rmdir program/lib/Auth
@@ -314,8 +314,12 @@ if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
 fi
 
 # Note this on version upgrade
-%triggerpostun -- %{name} < %{version}
-%banner -e %{name} <<-EOF
+%triggerpostun -- %{name} < %{version}-0
+# don't do anything on --downgrade
+if [ $1 -le 1 ]; then
+	exit 0
+fi
+%banner -e %{name}-upgrade <<-EOF
 Run %{_appdir}/bin/update to update to version %{version}.
 (Be sure to have %{name}-setup installed when you run it)
 
