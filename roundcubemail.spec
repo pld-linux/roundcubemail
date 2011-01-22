@@ -39,6 +39,7 @@ Patch4:		%{name}-password-anon-ldap-bind.patch
 Patch5:		use-iconv.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
