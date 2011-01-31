@@ -20,7 +20,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.5
-Release:	3
+Release:	4
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -50,7 +50,7 @@ Requires:	php-iconv
 Requires:	php-imap
 Requires:	php-pcre
 Requires:	php-pear-DB
-Requires:	php-pear-Mail_Mime
+Requires:	php-pear-Mail_Mime >= 1.8.0
 Requires:	php-pear-Net_IDNA2 >= 0.1.1
 Requires:	php-pear-Net_SMTP
 Requires:	php-session
