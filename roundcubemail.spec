@@ -8,10 +8,11 @@
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - Some php-database backend. Suggests?
 # - test/finish and then enable by default password-anon-ldap-bind patch
+# - bconds does not work for a long time
 #
-%bcond_with	spamfilter	# Build with spamfilter patch
-%bcond_with	postfixadmin	# Build with postfixadmin support patch
-%bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
+#%bcond_with	spamfilter	# Build with spamfilter patch
+#%bcond_with	postfixadmin	# Build with postfixadmin support patch
+#%bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
@@ -19,12 +20,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.5.1
+Version:	0.5.2
 Release:	1
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	f462d4b3999121679ec103ba2dc38e8d
+# Source0-md5:	7451ee4b3fdc89300e37c6fa9cd0f7b7
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
