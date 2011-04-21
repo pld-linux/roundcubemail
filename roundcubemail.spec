@@ -10,9 +10,9 @@
 # - test/finish and then enable by default password-anon-ldap-bind patch
 # - bconds does not work for a long time
 #
-#%bcond_with	spamfilter	# Build with spamfilter patch
-#%bcond_with	postfixadmin	# Build with postfixadmin support patch
-#%bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
+%bcond_with	spamfilter	# Build with spamfilter patch
+%bcond_with	postfixadmin	# Build with postfixadmin support patch
+%bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.2.3
