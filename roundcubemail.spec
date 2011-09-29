@@ -65,6 +65,7 @@ Requires:	webserver(indexfile)
 Requires:	webserver(php)
 Suggests:	php(fileinfo)
 Suggests:	php-gd
+Suggests:	php-intl
 Suggests:	php-json
 Suggests:	php-mbstring
 Suggests:	php-mcrypt
