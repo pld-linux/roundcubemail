@@ -20,12 +20,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.5.3
+Version:	0.6
 Release:	1
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	1575517c7d264439eb9f236e5e3e78d7
+# Source0-md5:	bdb9039d6fb95614a609aa1cb6476cf9
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -37,7 +37,6 @@ Patch1:		%{name}-spam.patch
 Patch2:		%{name}-postfixadmin-pl_locales.patch
 Patch3:		%{name}-faq-page.patch
 Patch4:		%{name}-password-anon-ldap-bind.patch
-Patch5:		use-iconv.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpm-pythonprov
@@ -153,7 +152,6 @@ Domyślna skórka dla RoundCube Webmaila.
 %if %{with password_anon_ldap_bind}
 %patch4 -p1
 %endif
-%patch5 -p1
 
 find -name .svn | xargs -r rm -rf
 
