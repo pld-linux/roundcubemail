@@ -21,7 +21,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.6
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -163,6 +163,8 @@ find -name .svn | xargs -r rm -rf
 for a in bin/*.sh; do
 	mv $a ${a%.sh}
 done
+
+%{__sed} -i s/indexcontacts.sh/indexcontacts/g bin/update
 
 # unpacked js sources
 find -name '*.src' | xargs rm -v
