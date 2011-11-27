@@ -75,6 +75,7 @@ Suggests:	php-pear-Net_LDAP2
 Suggests:	php-pear-Net_Sieve
 Suggests:	php-pear-Net_Socket
 Suggests:	php-xml
+Obsoletes:	roundcube-plugin-jqueryui
 Conflicts:	logrotate < 3.7-4
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
