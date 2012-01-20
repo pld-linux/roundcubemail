@@ -1,4 +1,5 @@
 /var/log/roundcube/* {
+	su root http
 	olddir /var/log/archive/roundcube
 	create 660 http logs
 	monthly

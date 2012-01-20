@@ -21,7 +21,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.6
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -76,7 +76,7 @@ Suggests:	php-pear-Net_Sieve
 Suggests:	php-pear-Net_Socket
 Suggests:	php-xml
 Obsoletes:	roundcube-plugin-jqueryui
-Conflicts:	logrotate < 3.7-4
+Conflicts:	logrotate < 3.8.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
