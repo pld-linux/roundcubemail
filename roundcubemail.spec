@@ -308,7 +308,11 @@ makedesstr()
 )
 
 if grep -q '24ByteDESkey' %{_sysconfdir}/main.inc.php; then
-	%{__sed} -i -e "s/rcmail-\!24ByteDESkey\*Str/$(makedesstr)/" %{_sysconfdir}/main.inc.php
+	des=$(makedesstr)
+	# precaution if random str generation failed
+	if [ c$(echo -n "$des" | wc -c) = c24 ]; then
+		%{__sed} -i -e "s/rcmail-\!24ByteDESkey\*Str/$des/" %{_sysconfdir}/main.inc.php
+	fi
 fi
 
 %pretrans
