@@ -301,6 +301,16 @@ cat plugins.lang >> %{name}.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post
+# replace default des string in config file for better security
+makedesstr()
+	openssl rand -hex 12
+)
+
+if grep -q '24ByteDESkey' %{_sysconfdir}/main.inc.php; then
+	%{__sed} -i -e "s/rcmail-\!24ByteDESkey\*Str/$(makedesstr)/" %{_sysconfdir}/main.inc.php
+fi
+
 %pretrans
 if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
 	# import configs from previously manually installed site
