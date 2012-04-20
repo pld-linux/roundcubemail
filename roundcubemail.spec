@@ -1,12 +1,9 @@
 # TODO:
-# - use gpl-dependant tarball, instead of full tarball and removing all bundled libs again?
-#   see: http://www.roundcubeforum.net/3-news-announcements/32-news-announcements/6601-roundcube-news-new-version-0-4-beta-released.html
 # - move bin/* to -setup which are related to upgrading/setup
 # - use system js/tiny_mce
 # - use system js/jquery
 # - use system magic db: program/lib/magic
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
-# - Some php-database backend. Suggests?
 # - test/finish and then enable by default password-anon-ldap-bind patch
 # - bconds does not work for a long time
 #
@@ -72,6 +69,10 @@ Suggests:	php-mbstring
 Suggests:	php-mcrypt
 Suggests:	php-openssl
 Suggests:	php-pear-Auth_SASL
+# at least one MDB2 db driver needed
+Suggests:	php-pear-MDB2_Driver_mysql
+Suggests:	php-pear-MDB2_Driver_pgsql
+Suggests:	php-pear-MDB2_Driver_sqlite
 Suggests:	php-pear-Net_LDAP2
 Suggests:	php-pear-Net_Sieve
 Suggests:	php-pear-Net_Socket
