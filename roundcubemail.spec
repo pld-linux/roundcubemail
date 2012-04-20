@@ -1,7 +1,6 @@
 # TODO:
 # - use system js/tiny_mce
 # - use system js/jquery
-# - use system magic db: program/lib/magic
 # - package: http://blog.ilohamail.org/ and remove boundled classess from it
 # - test/finish and then enable by default password-anon-ldap-bind patch
 # - bconds does not work for a long time
