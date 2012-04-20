@@ -303,9 +303,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 # replace default des string in config file for better security
-makedesstr()
+makedesstr() {
 	openssl rand -hex 12
-)
+}
 
 if grep -q '24ByteDESkey' %{_sysconfdir}/main.inc.php; then
 	des=$(makedesstr)
