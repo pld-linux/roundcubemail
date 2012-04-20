@@ -24,8 +24,9 @@ Version:	0.7.2
 Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
-Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
-# Source0-md5:	529bd9131e796e368b68b9aec9c885d0
+#Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-dep.tar.gz
+# Source0-md5:	2b77fe823de00a7ebd85b8919e40d78d
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -142,7 +143,7 @@ Default skin for RoundCube Webmail.
 Domyślna skórka dla RoundCube Webmaila.
 
 %prep
-%setup -q %{?with_postfixadmin:-a 4}
+%setup -q -n %{name}-%{version}-dep %{?with_postfixadmin:-a 4}
 %patch0 -p1
 %if %{with spamfilter}
 %patch1 -p1
@@ -173,43 +174,11 @@ find -name '*.src' | xargs rm -v
 # tools to pack js
 rm -f bin/{jsshrink,jsunshrink}
 
-# rm utf8.class and deps, we use iconv extension
-rm program/lib/utf8.class.php
-rm -r program/lib/encoding
-
-# php-pear-PEAR-core 1.9.0 (used indirectly)
-rm program/lib/PEAR.php
-rm program/lib/PEAR5.php
-
-# php-pear-Net_Socket 1.0.9 (used by password, managesieve plugins)
-rm program/lib/Net/Socket.php
-
-# php-pear-Net_SMTP 1.4.2 (nothing seem to use it)
-rm program/lib/Net/SMTP.php
-
-# php-pear-Auth_SASL 1.0.4 (used by managesieve)
-rm program/lib/Auth/SASL.php
-rm -r program/lib/Auth/SASL
-
-# php-pear-Mail_Mime 1.8.0 (nothing seems to use it)
-rm program/lib/Mail/mime.php
-rm program/lib/Mail/mimePart.php
-
 # php-pear-Net_Sieve 1.3.0
 rm plugins/managesieve/lib/Net/Sieve.php
 
-# 0.1.1 snapshot (at least r301175)
-rm program/lib/Net/IDNA2.php
-rm -r program/lib/Net/IDNA2
-
 # now empty dirs
-rmdir program/lib/Auth
-rmdir program/lib/Mail
-rmdir program/lib/Net
 rmdir plugins/managesieve/lib/Net
-
-# unknown MDB2 version (newer than released 2.5.0b2, or modified by rc)
-#rm program/lib/MDB2.php
 
 # pear package junk
 rm -v plugins/*/package.xml
@@ -219,24 +188,24 @@ mv config/main.inc.php.dist config/main.inc.php
 %if %{with postfixadmin}
 mv rcpfa-%{rcpfa_ver} rcpfa
 cd rcpfa
-cp code/forwarding.html ../skins/default/templates
-cp code/password.html ../skins/default/templates
-cp code/vacation.html ../skins/default/templates
-cp code/pfa_forwarding.inc ../program/steps/settings
-cp code/pfa_password.inc ../program/steps/settings
-cp code/pfa_vacation.inc ../program/steps/settings
-cp code/pfa.php ../program/include
+cp -p code/forwarding.html ../skins/default/templates
+cp -p code/password.html ../skins/default/templates
+cp -p code/vacation.html ../skins/default/templates
+cp -p code/pfa_forwarding.inc ../program/steps/settings
+cp -p code/pfa_password.inc ../program/steps/settings
+cp -p code/pfa_vacation.inc ../program/steps/settings
+cp -p code/pfa.php ../program/include
 
-patch -d .. -p1 < diffs/app.js.diff
-patch -d .. -p1 < diffs/db.inc.php.diff
-patch -d .. -p1 < diffs/func.inc.diff
-patch -d .. -p1 < diffs/index.php.diff
-patch -d .. -p1 < diffs/labels.inc.diff
-patch -d .. -p1 < diffs/main.inc.diff
-patch -d .. -p1 < diffs/main.inc.php.diff
-patch -d .. -p1 < diffs/messages.inc.diff
-patch -d .. -p1 < diffs/rcube_user.php.diff
-patch -d .. -p1 < diffs/settingstabs.html.diff
+%{__patch} -d .. -p1 < diffs/app.js.diff
+%{__patch} -d .. -p1 < diffs/db.inc.php.diff
+%{__patch} -d .. -p1 < diffs/func.inc.diff
+%{__patch} -d .. -p1 < diffs/index.php.diff
+%{__patch} -d .. -p1 < diffs/labels.inc.diff
+%{__patch} -d .. -p1 < diffs/main.inc.diff
+%{__patch} -d .. -p1 < diffs/main.inc.php.diff
+%{__patch} -d .. -p1 < diffs/messages.inc.diff
+%{__patch} -d .. -p1 < diffs/rcube_user.php.diff
+%{__patch} -d .. -p1 < diffs/settingstabs.html.diff
 %endif
 
 %install
@@ -267,10 +236,10 @@ cp -a config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
 ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
 ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
-cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
-cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
 # find locales
 %find_lang %{name}.lang
