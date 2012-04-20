@@ -1,5 +1,4 @@
 # TODO:
-# - move bin/* to -setup which are related to upgrading/setup
 # - use system js/tiny_mce
 # - use system js/jquery
 # - use system magic db: program/lib/magic
@@ -345,8 +344,6 @@ EOF
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %dir %{_appdir}
 %{_appdir}/*.php
-%dir %{_appdir}/bin
-%attr(755,root,root) %{_appdir}/bin/*
 %dir %{_appdir}/config
 %{_appdir}/config/*.php
 %dir %{_appdir}/program
@@ -368,6 +365,8 @@ EOF
 
 %files setup
 %defattr(644,root,root,755)
+%dir %{_appdir}/bin
+%attr(755,root,root) %{_appdir}/bin/*
 %dir %{_appdir}/installer
 %{_appdir}/installer/*.php
 %{_appdir}/installer/client.js
