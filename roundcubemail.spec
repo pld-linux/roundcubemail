@@ -16,7 +16,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.7.2
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Applications/Mail
 #Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
@@ -39,6 +39,7 @@ BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
+Requires:	php(core) >= %{php_min_version}
 Requires:	php(dom)
 Requires:	php(iconv)
 Requires:	php(imap)
@@ -48,7 +49,6 @@ Requires:	php(simplexml)
 Requires:	php(sockets)
 Requires:	php(spl)
 Requires:	php(xml)
-Requires:	php-common >= 4:%{php_min_version}
 Requires:	php-date
 Requires:	php-pear-DB
 Requires:	php-pear-Mail_Mime >= 1.8.0
