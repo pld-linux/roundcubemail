@@ -134,7 +134,6 @@ Summary(pl.UTF-8):	Klasyczna skórka dla RoundCube Webmaila
 Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-skin
-Obsoletes:	%{name}-skin-classic
 
 %description skin-classic
 Classic skin for RoundCube Webmail.
@@ -143,11 +142,12 @@ Classic skin for RoundCube Webmail.
 Klasyczna skórka dla RoundCube Webmaila.
 
 %package skin-larry
-Summary:        Larry skin for RoundCube Webmail
-Summary(pl.UTF-8):      Skórka Larry dla RoundCube Webmaila
-Group:          Applications/WWW
-Requires:       %{name} = %{version}-%{release}
-Provides:       %{name}-skin
+Summary:	Larry skin for RoundCube Webmail
+Summary(pl.UTF-8):	Skórka Larry dla RoundCube Webmaila
+Group:		Applications/WWW
+Requires:	%{name} = %{version}-%{release}
+Provides:	%{name}-skin
+Obsoletes:	roundcubemail-skin-default
 
 %description skin-larry
 Larry skin for RoundCube Webmail.
