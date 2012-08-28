@@ -76,6 +76,7 @@ Suggests:	php-pear-Net_Sieve
 Suggests:	php-pear-Net_Socket
 Suggests:	php-xml
 Obsoletes:	roundcube-plugin-jqueryui
+Obsoletes:	roundcubemail-skin-default
 Conflicts:	logrotate < 3.8.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -147,7 +148,6 @@ Summary(pl.UTF-8):	Skórka Larry dla RoundCube Webmaila
 Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-skin
-Obsoletes:	roundcubemail-skin-default
 
 %description skin-larry
 Larry skin for RoundCube Webmail.
