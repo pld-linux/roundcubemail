@@ -15,13 +15,13 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.7.2
-Release:	3
+Version:	0.8.1
+Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
 #Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}.tar.gz
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-dep.tar.gz
-# Source0-md5:	2b77fe823de00a7ebd85b8919e40d78d
+# Source0-md5:	06812a089c779a535ff42e3e3f753e13
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -128,18 +128,32 @@ This package provides installer script for RoundCube Webmail.
 %description setup -l pl.UTF-8
 Ten pakiet zawiera skrypt instalacyjny RoundCube Webmaila.
 
-%package skin-default
-Summary:	Default skin for RoundCube Webmail
-Summary(pl.UTF-8):	Domyślna skórka dla RoundCube Webmaila
+%package skin-classic
+Summary:	Classic skin for RoundCube Webmail
+Summary(pl.UTF-8):	Klasyczna skórka dla RoundCube Webmaila
 Group:		Applications/WWW
 Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-skin
+Obsoletes:	%{name}-skin-classic
 
-%description skin-default
-Default skin for RoundCube Webmail.
+%description skin-classic
+Classic skin for RoundCube Webmail.
 
-%description skin-default -l pl.UTF-8
-Domyślna skórka dla RoundCube Webmaila.
+%description skin-classic -l pl.UTF-8
+Klasyczna skórka dla RoundCube Webmaila.
+
+%package skin-larry
+Summary:        Larry skin for RoundCube Webmail
+Summary(pl.UTF-8):      Skórka Larry dla RoundCube Webmaila
+Group:          Applications/WWW
+Requires:       %{name} = %{version}-%{release}
+Provides:       %{name}-skin
+
+%description skin-larry
+Larry skin for RoundCube Webmail.
+
+%description skin-larry -l pl.UTF-8
+Skórka Larry dla RoundCube Webmaila.
 
 %prep
 %setup -q -n %{name}-%{version}-dep %{?with_postfixadmin:-a 4}
@@ -334,7 +348,7 @@ EOF
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc CHANGELOG INSTALL README UPGRADING
+%doc CHANGELOG INSTALL README.md UPGRADING
 %dir %attr(750,root,http) %{_sysconfdir}
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
@@ -370,11 +384,14 @@ EOF
 %{_appdir}/installer/*.php
 %{_appdir}/installer/client.js
 %{_appdir}/installer/styles.css
-%{_appdir}/installer/welcome.html
 %{_appdir}/installer/images
 %{_appdir}/config/*.php.dist
 %{_appdir}/SQL
 
-%files skin-default
+%files skin-classic
 %defattr(644,root,root,755)
-%{_appdir}/skins/default
+%{_appdir}/skins/classic
+
+%files skin-larry
+%defattr(644,root,root,755)
+%{_appdir}/skins/larry
