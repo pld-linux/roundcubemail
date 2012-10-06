@@ -38,19 +38,26 @@ while read dir; do
 			continue
 			;;
 		*.*)
-			echo >&2 "ERROR: bad match: $lang"
+			echo >&2 "ERROR: Bad match: $lang"
 			rc=1
 		;;
 		*-*)
 			echo >&2 "ERROR: Need mapping for $lang!"
 			rc=1
 		;;
+		en_US)
+			lang=
+			;;
 		esac
-		echo "%lang($lang) ${path}" >> $langfile
+		if [ "$lang" ]; then
+			echo "%lang($lang) $path" >> $langfile
+		else
+			echo "$path" >> $langfile
+		fi
 	done
 done < $tmp
 
-if [ "$(egrep -v '(^%defattr|^$)' $langfile | wc -l)" -le 0 ]; then
+if [ "$(grep -Ev '(^%defattr|^$)' $langfile | wc -l)" -le 0 ]; then
 	echo >&2 "$PROG: Error: international files not found!"
 	rc=1
 fi
