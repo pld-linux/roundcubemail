@@ -221,6 +221,9 @@ cp -p code/pfa.php ../program/include
 %{__patch} -d .. -p1 < diffs/settingstabs.html.diff
 %endif
 
+# cleanup backups after patching
+find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
