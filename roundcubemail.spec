@@ -39,6 +39,7 @@ BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
 Requires:	php(core) >= %{php_min_version}
+Requires:	php(date)
 Requires:	php(dom)
 Requires:	php(iconv)
 Requires:	php(imap)
@@ -48,7 +49,6 @@ Requires:	php(simplexml)
 Requires:	php(sockets)
 Requires:	php(spl)
 Requires:	php(xml)
-Requires:	php-date
 Requires:	php-pear-DB
 Requires:	php-pear-Mail_Mime >= 1.8.0
 Requires:	php-pear-Net_IDNA2 >= 0.1.1
@@ -58,8 +58,8 @@ Requires:	webapps
 Requires:	webserver(alias)
 Requires:	webserver(indexfile)
 Requires:	webserver(php)
-Requires(post):        openssl-tools
-Suggests:      php(exif)
+Requires(post):	openssl-tools
+Suggests:	php(exif)
 Suggests:	php(fileinfo)
 Suggests:	php-gd
 Suggests:	php-intl
