@@ -58,6 +58,8 @@ Requires:	webapps
 Requires:	webserver(alias)
 Requires:	webserver(indexfile)
 Requires:	webserver(php)
+Requires(post):        openssl-tools
+Suggests:      php(exif)
 Suggests:	php(fileinfo)
 Suggests:	php-gd
 Suggests:	php-intl
