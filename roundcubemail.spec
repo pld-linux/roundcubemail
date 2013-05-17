@@ -16,7 +16,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	0.8.6
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-dep.tar.gz
@@ -27,6 +27,7 @@ Source3:	lighttpd.conf
 Source4:	http://nejc.skoberne.net/wp-content/uploads/2008/11/rcpfa-105.tgz
 # Source4-md5:	dc23bcd894f693db74fce53b09ab58d6
 Source5:	find-lang.sh
+Source6:	httpd.conf
 Patch0:		%{name}-config.patch
 Patch1:		%{name}-spam.patch
 Patch2:		%{name}-postfixadmin-pl_locales.patch
@@ -78,6 +79,7 @@ Suggests:	php-pear-Net_Socket
 Suggests:	php-xml
 Obsoletes:	roundcube-plugin-jqueryui
 Obsoletes:	roundcubemail-skin-default
+Conflicts:	apache-base < 2.4.0-1
 Conflicts:	logrotate < 3.8.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -252,7 +254,7 @@ ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
 ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+cp -p %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/%{name}
 
@@ -336,10 +338,10 @@ EOF
 %triggerun -- apache1 < 1.3.37-3, apache1-base
 %webapp_unregister apache %{_webapp}
 
-%triggerin -- apache < 2.2.0, apache-base
+%triggerin -- apache-base
 %webapp_register httpd %{_webapp}
 
-%triggerun -- apache < 2.2.0, apache-base
+%triggerun -- apache-base
 %webapp_unregister httpd %{_webapp}
 
 %triggerin -- lighttpd
