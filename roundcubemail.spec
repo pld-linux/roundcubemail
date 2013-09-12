@@ -184,6 +184,7 @@ for a in bin/*.sh; do
 done
 
 %{__sed} -i s/indexcontacts.sh/indexcontacts/g bin/update
+%{__sed} -i s/updatedb.sh/update/g bin/update
 
 # tools to pack js
 rm bin/{jsshrink,jsunshrink}
