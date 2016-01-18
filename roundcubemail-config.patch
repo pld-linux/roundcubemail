@@ -1,15 +1,15 @@
---- ./config/main.inc.php.dist.org	2006-06-17 17:42:13.000000000 +0000
-+++ ./config/main.inc.php.dist	2006-06-17 17:43:35.000000000 +0000
-@@ -30,10 +30,10 @@
+--- roundcubemail-1.0.8-dep/config/defaults.inc.php~	2015-12-23 10:52:43.000000000 +0200
++++ roundcubemail-1.0.8-dep/config/defaults.inc.php	2016-01-18 15:21:12.144699738 +0200
+@@ -309,10 +309,10 @@
  
  // use this folder to store log files (must be writeable for apache user)
  // This is used by the 'file' log driver.
--$rcmail_config['log_dir'] = 'logs/';
-+$rcmail_config['log_dir'] = '/var/log/roundcube';
+-$config['log_dir'] = RCUBE_INSTALL_PATH . 'logs/';
++$config['log_dir'] = '/var/log/roundcube';
  
  // use this folder to store temp files (must be writeable for apache user)
--$rcmail_config['temp_dir'] = 'temp/';
-+$rcmail_config['temp_dir'] = '/var/lib/roundcube';
+-$config['temp_dir'] = RCUBE_INSTALL_PATH . 'temp/';
++$config['temp_dir'] = '/var/lib/roundcube';
  
- // enable caching of messages and mailbox data in the local database.
- // this is recommended if the IMAP server does not run on the same machine
+ // expire files in temp_dir after 48 hours
+ // possible units: s, m, h, d, w

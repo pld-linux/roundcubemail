@@ -15,12 +15,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	0.9.5
-Release:	1
+Version:	1.0.8
+Release:	0.1
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-dep.tar.gz
-# Source0-md5:	7383f81a75bcbe8ea00d882f6be4834c
+# Source0-md5:	9465b80be1c13534646a04b0b5562d56
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -36,7 +36,7 @@ Patch4:		%{name}-password-anon-ldap-bind.patch
 URL:		http://www.roundcube.net/
 BuildRequires:	rpm-php-pearprov >= 4.4.2-11
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.566
+BuildRequires:	rpmbuild(macros) >= 1.654
 BuildRequires:	sed >= 4.0
 Requires:	%{name}-skin
 Requires:	php(core) >= %{php_min_version}
@@ -62,12 +62,13 @@ Requires:	webserver(php)
 Requires(post):	openssl-tools
 Suggests:	php(exif)
 Suggests:	php(fileinfo)
-Suggests:	php-gd
-Suggests:	php-intl
-Suggests:	php-json
-Suggests:	php-mbstring
-Suggests:	php-mcrypt
-Suggests:	php-openssl
+Suggests:	php(gd)
+Suggests:	php(intl)
+Suggests:	php(json)
+Suggests:	php(mbstring)
+Suggests:	php(mcrypt)
+Suggests:	php(openssl)
+Suggests:	php(xml)
 Suggests:	php-pear-Auth_SASL
 # at least one MDB2 db driver needed
 Suggests:	php-pear-MDB2_Driver_mysql
@@ -76,7 +77,6 @@ Suggests:	php-pear-MDB2_Driver_sqlite
 Suggests:	php-pear-Net_LDAP2
 Suggests:	php-pear-Net_Sieve
 Suggests:	php-pear-Net_Socket
-Suggests:	php-xml
 Obsoletes:	roundcube-plugin-jqueryui
 Obsoletes:	roundcubemail-skin-default
 Conflicts:	apache-base < 2.4.0-1
@@ -94,14 +94,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		find_lang 	sh %{SOURCE5} %{buildroot}
 
-# bad depsolver
-%define		_noautopear	pear
+%define		_noautoreq_pear	.*
 
 # exclude optional php dependencies
 %define		_noautophp	php-sqlite php-mysql php-mysqli php-pgsql php-hash php-json php-xml
 
 # put it together for rpmbuild
-%define		_noautoreq	%{?_noautophp} %{?_noautopear}
+%define		_noautoreq	%{?_noautophp}
 
 %description
 RoundCube Webmail is a browser-based multilingual IMAP client with an
@@ -177,29 +176,17 @@ find -name .svn | xargs -r rm -rf
 # undos the source
 %undos -f php,inc,js,css
 
-# kill extensions and fill proper shebang
-%{__sed} -i -e '1s,^#!.*php,#!%{__php},' bin/*.sh
-for a in bin/*.sh; do
-	mv $a ${a%.sh}
-done
-
-%{__sed} -i s/indexcontacts.sh/indexcontacts/g bin/update
-%{__sed} -i s/updatedb.sh/updatedb/g bin/update
+# fill proper shebang
+%{__sed} -i -e '1s,^#!.*php,#!/usr/bin/php,' bin/*.sh
 
 # tools to pack js
-rm bin/{jsshrink,jsunshrink}
-
-# php-pear-Net_Sieve 1.3.0
-rm plugins/managesieve/lib/Net/Sieve.php
-
-# now empty dirs
-rmdir plugins/managesieve/lib/Net
+rm bin/jsshrink.sh
 
 # pear package junk
 rm -v plugins/*/package.xml
 
-mv config/db.inc.php.dist config/db.inc.php
-mv config/main.inc.php.dist config/main.inc.php
+mv config/config.inc.php{.sample,}
+
 %if %{with postfixadmin}
 mv rcpfa-%{rcpfa_ver} rcpfa
 cd rcpfa
@@ -217,7 +204,7 @@ cp -p code/pfa.php ../program/include
 %{__patch} -d .. -p1 < diffs/index.php.diff
 %{__patch} -d .. -p1 < diffs/labels.inc.diff
 %{__patch} -d .. -p1 < diffs/main.inc.diff
-%{__patch} -d .. -p1 < diffs/main.inc.php.diff
+%{__patch} -d .. -p1 < diffs/config.inc.php.diff
 %{__patch} -d .. -p1 < diffs/messages.inc.diff
 %{__patch} -d .. -p1 < diffs/rcube_user.php.diff
 %{__patch} -d .. -p1 < diffs/settingstabs.html.diff
@@ -229,7 +216,7 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
-	$RPM_BUILD_ROOT{%{_appdir}/{bin,config,installer,program,skins},/etc/logrotate.d}
+	$RPM_BUILD_ROOT{%{_appdir}/{bin,installer,program,skins},/etc/logrotate.d}
 
 # Main application part:
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
@@ -241,18 +228,14 @@ cp -a skins/* $RPM_BUILD_ROOT%{_appdir}/skins
 
 # Installer part
 cp -a installer/* $RPM_BUILD_ROOT%{_appdir}/installer
-cp -a config/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php.dist
-cp -a config/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php.dist
 cp -a SQL $RPM_BUILD_ROOT%{_appdir}
 
 # Plugins
 cp -a plugins $RPM_BUILD_ROOT%{_appdir}/plugins
 
 ## Configuration:
-cp -a config/db.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/db.inc.php
-cp -a config/main.inc.php $RPM_BUILD_ROOT%{_sysconfdir}/main.inc.php
-ln -sf %{_sysconfdir}/db.inc.php $RPM_BUILD_ROOT%{_appdir}/config/db.inc.php
-ln -sf %{_sysconfdir}/main.inc.php $RPM_BUILD_ROOT%{_appdir}/config/main.inc.php
+cp -a config/*.php $RPM_BUILD_ROOT%{_sysconfdir}
+ln -sf %{_sysconfdir} $RPM_BUILD_ROOT%{_appdir}/config
 
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
@@ -274,7 +257,7 @@ for p in $RPM_BUILD_ROOT%{_appdir}/plugins/*; do
 		localization)
 			continue
 			;;
-		README | Changelog | config.inc.php.dist)
+		README | Changelog | composer.json | config.inc.php.dist)
 			echo "%doc $p"
 			;;
 		*)
@@ -294,29 +277,11 @@ makedesstr() {
 	openssl rand -hex 12
 }
 
-if grep -q '24ByteDESkey' %{_sysconfdir}/main.inc.php; then
+if grep -q '24ByteDESkey' %{_sysconfdir}/config.inc.php; then
 	des=$(makedesstr)
 	# precaution if random str generation failed
 	if [ c$(echo -n "$des" | wc -c) = c24 ]; then
-		%{__sed} -i -e "s/rcmail-\!24ByteDESkey\*Str/$des/" %{_sysconfdir}/main.inc.php
-	fi
-fi
-
-%pretrans
-if [ ! -f %{_sysconfdir}/db.inc.php -o ! -f %{_sysconfdir}/main.inc.php ]; then
-	# import configs from previously manually installed site
-	d=/home/services/httpd/html/config
-	if [ -f $d/db.inc.php -o -f $d/main.inc.php ]; then
-		echo >&2 "Importing site configs from $d"
-		mkdir -p %{_sysconfdir}
-		if [ -f $d/db.inc.php ]; then
-			[ -f %{_sysconfdir}/db.inc.php ] && mv -f %{_sysconfdir}/db.inc.php{,.rpmorig}
-			cp -af $d/db.inc.php %{_sysconfdir}/db.inc.php
-		fi
-		if [ -f $d/main.inc.php ]; then
-			[ -f %{_sysconfdir}/main.inc.php ] && mv -f %{_sysconfdir}/main.inc.php{,.rpmorig}
-			cp -af $d/main.inc.php %{_sysconfdir}/main.inc.php
-		fi
+		%{__sed} -i -e "s/rcmail-\!24ByteDESkey\*Str/$des/" %{_sysconfdir}/config.inc.php
 	fi
 fi
 
@@ -358,12 +323,13 @@ EOF
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lighttpd.conf
-%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*.php
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/config.inc.php
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/defaults.inc.php
+%attr(640,root,http) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mimetypes.php
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/%{name}
 %dir %{_appdir}
 %{_appdir}/*.php
-%dir %{_appdir}/config
-%{_appdir}/config/*.php
+%{_appdir}/config
 %dir %{_appdir}/program
 %{_appdir}/program/include
 %{_appdir}/program/js
@@ -390,7 +356,6 @@ EOF
 %{_appdir}/installer/client.js
 %{_appdir}/installer/styles.css
 %{_appdir}/installer/images
-%{_appdir}/config/*.php.dist
 %{_appdir}/SQL
 
 %files skin-classic
