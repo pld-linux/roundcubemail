@@ -16,7 +16,7 @@ Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	1.0.8
-Release:	0.1
+Release:	0.2
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	http://downloads.sourceforge.net/roundcubemail/%{name}-%{version}-dep.tar.gz
@@ -216,7 +216,7 @@ find '(' -name '*~' -o -name '*.orig' ')' -print0 | xargs -0 -r -l512 rm -f
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_appdatadir},%{_applogdir},%{_archivelogdir},%{_sysconfdir}} \
-	$RPM_BUILD_ROOT{%{_appdir}/{bin,installer,program,skins},/etc/logrotate.d}
+	$RPM_BUILD_ROOT{%{_appdir}/{bin,config,installer,program,skins},/etc/logrotate.d}
 
 # Main application part:
 cp -a program/* $RPM_BUILD_ROOT%{_appdir}/program
@@ -234,9 +234,10 @@ cp -a SQL $RPM_BUILD_ROOT%{_appdir}
 cp -a plugins $RPM_BUILD_ROOT%{_appdir}/plugins
 
 ## Configuration:
-cp -a config/*.php $RPM_BUILD_ROOT%{_sysconfdir}
-ln -sf %{_sysconfdir} $RPM_BUILD_ROOT%{_appdir}/config
-
+for a in config/*.php; do
+	cp -p $a $RPM_BUILD_ROOT%{_sysconfdir}
+	ln -s %{_sysconfdir}/$(basename $a) $RPM_BUILD_ROOT%{_appdir}/config
+done
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 cp -p %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 cp -p %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/lighttpd.conf
