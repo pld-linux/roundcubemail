@@ -10,13 +10,13 @@
 %bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
-%define		php_min_version 5.2.3
+%define		php_min_version 5.3.7
 %include	/usr/lib/rpm/macros.php
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
 Version:	1.0.12
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	https://github.com/roundcube/%{name}/releases/download/%{version}/%{name}-%{version}-dep.tar.gz
@@ -42,16 +42,21 @@ Requires:	%{name}-skin
 Requires:	php(core) >= %{php_min_version}
 Requires:	php(date)
 Requires:	php(dom)
+Requires:	php(filter)
 Requires:	php(iconv)
 Requires:	php(imap)
+Requires:	php(json)
+Requires:	php(mbstring)
+Requires:	php(mcrypt)
 Requires:	php(pcre)
+Requires:	php(pdo)
 Requires:	php(session)
 Requires:	php(simplexml)
 Requires:	php(sockets)
 Requires:	php(spl)
 Requires:	php(xml)
 Requires:	php-pear-DB
-Requires:	php-pear-Mail_Mime >= 1.8.0
+Requires:	php-pear-Mail_Mime >= 1.8.1
 Requires:	php-pear-Net_IDNA2 >= 0.1.1
 Requires:	php-pear-Net_SMTP
 Requires:	rpm-whiteout >= 1.22
@@ -64,18 +69,17 @@ Suggests:	php(exif)
 Suggests:	php(fileinfo)
 Suggests:	php(gd)
 Suggests:	php(intl)
-Suggests:	php(json)
-Suggests:	php(mbstring)
-Suggests:	php(mcrypt)
 Suggests:	php(openssl)
 Suggests:	php(xml)
-Suggests:	php-pear-Auth_SASL
-# at least one MDB2 db driver needed
-Suggests:	php-pear-MDB2_Driver_mysql
-Suggests:	php-pear-MDB2_Driver_pgsql
-Suggests:	php-pear-MDB2_Driver_sqlite
+Suggests:	php(zip)
+Suggests:	php-pear-Auth_SASL >= 1.0.6
+# at least one pdo db driver needed
+Suggests:	php(pdo-pgsql)
+Suggests:	php(pdo-mysql)
+Suggests:	php(pdo-sqlite)
+Suggests:	php-pear-Crypt_GPG >= 1.2.0
 Suggests:	php-pear-Net_LDAP2
-Suggests:	php-pear-Net_Sieve
+Suggests:	php-pear-Net_Sieve >= 1.3.2
 Suggests:	php-pear-Net_Socket
 Obsoletes:	roundcube-plugin-jqueryui
 Obsoletes:	roundcubemail-skin-default
