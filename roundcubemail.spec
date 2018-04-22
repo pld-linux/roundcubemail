@@ -10,17 +10,17 @@
 %bcond_with	password_anon_ldap_bind	# apply with password-anon-ldap-bind patch.
 
 %define		rcpfa_ver	1.0.5
-%define		php_min_version 5.3.7
+%define		php_min_version 5.4.0
 %include	/usr/lib/rpm/macros.php
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	1.0.12
-Release:	2
+Version:	1.3.6
+Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
-Source0:	https://github.com/roundcube/%{name}/releases/download/%{version}/%{name}-%{version}-dep.tar.gz
-# Source0-md5:	675b86f5ad2b67ac064a981d79ac3172
+Source0:	https://github.com/roundcube/%{name}/releases/download/%{version}/%{name}-%{version}-complete.tar.gz
+# Source0-md5:	3a16df41c1b28c098db7614f65d2fd84
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -48,6 +48,7 @@ Requires:	php(imap)
 Requires:	php(json)
 Requires:	php(mbstring)
 Requires:	php(mcrypt)
+Requires:	php(openssl)
 Requires:	php(pcre)
 Requires:	php(pdo)
 Requires:	php(session)
@@ -55,10 +56,9 @@ Requires:	php(simplexml)
 Requires:	php(sockets)
 Requires:	php(spl)
 Requires:	php(xml)
-Requires:	php-pear-DB
-Requires:	php-pear-Mail_Mime >= 1.8.1
+Requires:	php-pear-Mail_Mime >= 1.10.0
 Requires:	php-pear-Net_IDNA2 >= 0.1.1
-Requires:	php-pear-Net_SMTP
+Requires:	php-pear-Net_SMTP >= 1.7.1
 Requires:	rpm-whiteout >= 1.22
 Requires:	webapps
 Requires:	webserver(alias)
@@ -68,6 +68,7 @@ Requires(post):	openssl-tools
 Suggests:	php(exif)
 Suggests:	php(fileinfo)
 Suggests:	php(gd)
+Suggests:	php(Imagick)
 Suggests:	php(intl)
 Suggests:	php(openssl)
 Suggests:	php(xml)
@@ -77,10 +78,10 @@ Suggests:	php-pear-Auth_SASL >= 1.0.6
 Suggests:	php(pdo-pgsql)
 Suggests:	php(pdo-mysql)
 Suggests:	php(pdo-sqlite)
-Suggests:	php-pear-Crypt_GPG >= 1.2.0
+Suggests:	php-pear-Crypt_GPG >= 1.6.0
 Suggests:	php-pear-Net_LDAP2
 Suggests:	php-pear-Net_Sieve >= 1.3.2
-Suggests:	php-pear-Net_Socket
+Suggests:	php-pear-Net_Socket >= 1.0.12
 Obsoletes:	roundcube-plugin-jqueryui
 Obsoletes:	roundcubemail-skin-default
 Conflicts:	apache-base < 2.4.0-1
@@ -162,7 +163,7 @@ Larry skin for RoundCube Webmail.
 Skórka Larry dla RoundCube Webmaila.
 
 %prep
-%setup -q -n %{name}-%{version}-dep %{?with_postfixadmin:-a 4}
+%setup -q -n %{name}-%{version} %{?with_postfixadmin:-a 4}
 %patch0 -p1
 %if %{with spamfilter}
 %patch1 -p1
@@ -192,9 +193,6 @@ done
 # tools to pack js
 rm bin/jsshrink.sh
 rm bin/cssshrink.sh
-
-# pear package junk
-rm -v plugins/*/package.xml
 
 mv config/config.inc.php{.sample,}
 
