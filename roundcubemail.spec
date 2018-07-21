@@ -19,7 +19,7 @@ Version:	1.3.6
 Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
-Source0:	https://github.com/roundcube/%{name}/releases/download/%{version}/%{name}-%{version}-complete.tar.gz
+Source0:	https://github.com/roundcube/roundcubemail/releases/download/%{version}/%{name}-%{version}-complete.tar.gz
 # Source0-md5:	3a16df41c1b28c098db7614f65d2fd84
 Source1:	apache.conf
 Source2:	%{name}.logrotate
@@ -68,15 +68,15 @@ Requires(post):	openssl-tools
 Suggests:	php(exif)
 Suggests:	php(fileinfo)
 Suggests:	php(gd)
-Suggests:	php(Imagick)
+Suggests:	php(imagick)
 Suggests:	php(intl)
 Suggests:	php(openssl)
 Suggests:	php(xml)
 Suggests:	php(zip)
 Suggests:	php-pear-Auth_SASL >= 1.0.6
 # at least one pdo db driver needed
-Suggests:	php(pdo-pgsql)
 Suggests:	php(pdo-mysql)
+Suggests:	php(pdo-pgsql)
 Suggests:	php(pdo-sqlite)
 Suggests:	php-pear-Crypt_GPG >= 1.6.0
 Suggests:	php-pear-Net_LDAP2
@@ -163,7 +163,7 @@ Larry skin for RoundCube Webmail.
 Skórka Larry dla RoundCube Webmaila.
 
 %prep
-%setup -q -n %{name}-%{version} %{?with_postfixadmin:-a 4}
+%setup -q %{?with_postfixadmin:-a 4}
 %patch0 -p1
 %if %{with spamfilter}
 %patch1 -p1
