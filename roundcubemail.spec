@@ -15,12 +15,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	1.3.6
+Version:	1.3.7
 Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	https://github.com/roundcube/roundcubemail/releases/download/%{version}/%{name}-%{version}-complete.tar.gz
-# Source0-md5:	3a16df41c1b28c098db7614f65d2fd84
+# Source0-md5:	c7c4f2e5162b6d677e632480b70708a2
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
