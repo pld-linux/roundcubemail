@@ -11,7 +11,6 @@
 
 %define		rcpfa_ver	1.0.5
 %define		php_min_version 5.4.0
-%include	/usr/lib/rpm/macros.php
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
