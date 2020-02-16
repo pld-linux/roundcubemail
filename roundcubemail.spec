@@ -14,12 +14,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	1.3.10
+Version:	1.4.2
 Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	https://github.com/roundcube/roundcubemail/releases/download/%{version}/%{name}-%{version}-complete.tar.gz
-# Source0-md5:	d7ee123b22d23c866d7a6fdb37711362
+# Source0-md5:	44122deb6c5d77d65938b231d0625820
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -161,6 +161,19 @@ Larry skin for RoundCube Webmail.
 %description skin-larry -l pl.UTF-8
 Skórka Larry dla RoundCube Webmaila.
 
+%package skin-elastic
+Summary:	Elastic skin for RoundCube Webmail
+Summary(pl.UTF-8):	Skórka Elastic dla RoundCube Webmaila
+Group:		Applications/WWW
+Requires:	%{name} = %{version}-%{release}
+Provides:	%{name}-skin
+
+%description skin-elastic
+Elastic skin for RoundCube Webmail.
+
+%description skin-elastic -l pl.UTF-8
+Skórka Elastic dla RoundCube Webmaila.
+
 %prep
 %setup -q %{?with_postfixadmin:-a 4}
 %patch0 -p1
@@ -181,7 +194,7 @@ find -name .svn | xargs -r rm -rf
 %undos -f php,inc,js,css
 
 # fill proper shebang
-%{__sed} -i -e '1s,^#!.*php,#!/usr/bin/php,' bin/*.sh
+%{__sed} -i -e '1s,^#!.*php,#!/usr/bin/php,' bin/*.sh plugins/enigma/bin/import_keys.sh
 # these are php scripts really
 for a in $(grep -l '<?php' bin/*.sh); do
 	mv $a ${a%.sh}
@@ -374,3 +387,7 @@ EOF
 %files skin-larry
 %defattr(644,root,root,755)
 %{_appdir}/skins/larry
+
+%files skin-elastic
+%defattr(644,root,root,755)
+%{_appdir}/skins/elastic
