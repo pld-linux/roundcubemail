@@ -14,12 +14,12 @@
 Summary:	RoundCube Webmail
 Summary(pl.UTF-8):	RoundCube Webmail - poczta przez WWW
 Name:		roundcubemail
-Version:	1.4.2
+Version:	1.4.12
 Release:	1
 License:	GPL v3+
 Group:		Applications/Mail
 Source0:	https://github.com/roundcube/roundcubemail/releases/download/%{version}/%{name}-%{version}-complete.tar.gz
-# Source0-md5:	44122deb6c5d77d65938b231d0625820
+# Source0-md5:	eef559f03a7f5e56a92ca3bcbcc5f36e
 Source1:	apache.conf
 Source2:	%{name}.logrotate
 Source3:	lighttpd.conf
@@ -81,8 +81,8 @@ Suggests:	php-pear-Crypt_GPG >= 1.6.0
 Suggests:	php-pear-Net_LDAP2
 Suggests:	php-pear-Net_Sieve >= 1.3.2
 Suggests:	php-pear-Net_Socket >= 1.0.12
-Obsoletes:	roundcube-plugin-jqueryui
-Obsoletes:	roundcubemail-skin-default
+Obsoletes:	roundcube-plugin-jqueryui < 0.6
+Obsoletes:	roundcubemail-skin-default < 0.8.1
 Conflicts:	apache-base < 2.4.0-1
 Conflicts:	logrotate < 3.8.0
 BuildArch:	noarch
