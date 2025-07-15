@@ -176,16 +176,16 @@ Skórka Elastic dla RoundCube Webmaila.
 
 %prep
 %setup -q %{?with_postfixadmin:-a 4}
-%patch0 -p1
+%patch -P0 -p1
 %if %{with spamfilter}
-%patch1 -p1
+%patch -P1 -p1
 %endif
 %if %{with postfixadmin}
 #patch2 -p1
 %endif
 #%patch3 -p1
 %if %{with password_anon_ldap_bind}
-%patch4 -p1
+%patch -P4 -p1
 %endif
 
 find -name .svn | xargs -r rm -rf
