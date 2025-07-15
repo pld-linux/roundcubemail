@@ -183,7 +183,7 @@ Skórka Elastic dla RoundCube Webmaila.
 %if %{with postfixadmin}
 #patch2 -p1
 %endif
-#%patch3 -p1
+#%%patch3 -p1
 %if %{with password_anon_ldap_bind}
 %patch -P4 -p1
 %endif
